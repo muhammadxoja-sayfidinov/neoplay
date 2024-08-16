@@ -1,6 +1,8 @@
 
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:neoplay/core/constants/style.dart';
 class CustomButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String name ;
@@ -22,6 +24,7 @@ class CustomButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: width ,
+      height: 64.h,
 
       decoration: BoxDecoration(
           color: color,
@@ -32,8 +35,8 @@ class CustomButton extends StatelessWidget {
         child: Text(
           name,
           style: TextStyle(
-            fontWeight: FontWeight.w500,
-            fontSize: 16,
+            fontWeight: FontWeight.w400,
+            fontSize: 28.sp,
             color: Colors.white
           ),
         ),

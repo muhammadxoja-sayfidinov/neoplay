@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:neoplay/presentation/widgets/custom_enter_button.dart';
+import 'package:neoplay/presentation/screens/Login%20and%20registration/log_in.dart';
+import 'package:neoplay/presentation/screens/Login%20and%20registration/sign_up.dart';
+import 'package:neoplay/presentation/widgets/Custom_background.dart';
 
 import 'package:neoplay/presentation/widgets/login_register_toggle.dart';
 
@@ -22,68 +24,47 @@ class _EnterState extends State<Enter> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 0, // Hide AppBar
       ),
-      body: Container(
-        width: size.width,
-        height: size.height,
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage("assets/images/Log_in.png"),
-            fit: BoxFit.cover,
-          ),
-        ),
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: 87.sp,horizontal: 120.sp),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              colors: [
-                Colors.black.withOpacity(.9),
-                Colors.black.withOpacity(.5),
-                Colors.black.withOpacity(.4),
-                Colors.black.withOpacity(.0),
-              ],
-            ),
-          ),
-          child: Row(
+      body:  CustomBackground(
+          widget: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-             Container(
-               margin: EdgeInsets.only(top:45.sp ),
-               width: 420.sp,
-               child: Column(
-                 children: [
-                   LoginRegisterToggle(
-                     onToggle: _onToggle,
-                     text1: 'Kirish',
-                     text2: 'Ro’yxatdan o’tish',
-                   ),
-                   Expanded(
-                     child: _currentIndex == 0
-                         ?Column(
-                       children: [
-                         CustomEnterButton(svg: "assets/images/qr_logo.svg", text: "QR kod orqali kirish", onPressed: (){})
-                       ],
-                     ) // Your login form widget
-                         : Text("register") // Your registration form widget
-                   ),
-                 ],
-               ),
-             ),
+              Container(
+                margin: EdgeInsets.only(top:45.sp ),
+                width: 420.sp,
+                child: Column(
+                  children: [
+                    LoginRegisterToggle(
+                      onToggle: _onToggle,
+                      text1: 'Kirish',
+                      text2: 'Ro’yxatdan o’tish',
+                    ),
+                    SizedBox(
+                      height: 48.h,
+                    ),
+                    Expanded(
+                        child: _currentIndex == 0
+                            ?LogIn()// Your login form widget
+                            : SignUp() // Your registration form widget
+                    ),
+                  ],
+                ),
+              ),
 
-             Container(
-               width: 390.sp,
-               child:  Image(image: AssetImage('assets/images/Logo.png')),
-             )
+              Container(
+                width: 390.sp,
+                child:  Image(image: AssetImage('assets/images/Logo.png')),
+              )
             ],
           ),
-        ),
-      ),
+
+      )
+
     );
   }
 }

@@ -44,7 +44,7 @@ class CustomEnterButton extends StatelessWidget {
 
             Text(
                 text,
-                style:CustomTextStyle.style400.copyWith(fontSize: 28.sp)
+                style:CustomTextStyle.style400.copyWith(fontSize: 28.sp,color: Colors.white24)
             ),
           ],
         ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neoplay/presentation/screens/Login%20and%20registration/access%20_via%20_qr%20_code.dart';
 import 'package:neoplay/presentation/screens/Login%20and%20registration/enter.dart';
 import 'package:neoplay/presentation/screens/Login%20and%20registration/language_selection.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget {
           home: Enter(),
           routes: {
             LanguageSelection.id: (context) => const LanguageSelection(),
+            AccesViaQrCode.id: (context)=> const AccesViaQrCode(),
           },
         );
       },

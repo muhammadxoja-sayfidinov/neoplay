@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:neoplay/presentation/screens/main_pages/main_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/profile_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/saved_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/search_screen.dart';
@@ -30,10 +31,10 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     Widget body = const ProfileScreen();
     switch (selectedPage) {
       case 0:
-        body =  SearchScreen();
+        body = SearchScreen();
         break;
       case 1:
-        body = const ProfileScreen();
+        body = const MainScreen();
         break;
       case 2:
         body = const CatalogSceen();
@@ -52,6 +53,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         break;
     }
     return Scaffold(
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
           // Main content

@@ -8,12 +8,10 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        color: Colors.black,
-        padding: EdgeInsets.symmetric(vertical:72.w),
-        child: Column(
+    return  Column(
           children: [
               Container(
+                      padding: EdgeInsets.symmetric(horizontal: 600.w),
                     decoration: BoxDecoration(
                       color: grey,
                       borderRadius: BorderRadius.only(bottomLeft:Radius.circular(60.r),bottomRight:Radius.circular(60.r))
@@ -24,9 +22,13 @@ class SearchScreen extends StatelessWidget {
                     decoration: InputDecoration(
 
                       icon: Icon(Icons.search , color: gilosNeutral,),
-                      hintText: "Film, serial, multfilm izlang",
-                      hintStyle: CustomTextStyle.style400.copyWith(fontSize: 24.sp , color: gilosNeutral),
 
+                      hintText: "Film, serial, multfilm izlang",
+                      hintStyle: CustomTextStyle.style400.copyWith(fontSize: 24.sp , color: gilosNeutral ,),
+
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      )
                     ),
                   ),
                 )
@@ -40,7 +42,7 @@ class SearchScreen extends StatelessWidget {
               ),
             )
           ],
-        ),
+
     );
   }
 }

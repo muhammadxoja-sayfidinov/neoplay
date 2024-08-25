@@ -62,7 +62,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
               children: [
                 Expanded(
                     child: Padding(
-                  padding: EdgeInsets.only(right: 162.w, left: 85.w),
+                  padding: EdgeInsets.only(left: 162.w, right: 85.w),
                   child: body,
                 )),
               ],

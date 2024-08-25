@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:neoplay/presentation/screens/Login%20and%20registration/choose_profile_type.dart';
 import 'package:neoplay/presentation/widgets/Custom_background.dart';
 
 import '../../../core/constants/colors.dart';
@@ -36,7 +37,10 @@ class _GetBirthdayState extends State<GetBirthday> {
       _showError = !(_isDayValid && _isMonthValid && _isYearValid);
 
       if (!_showError) {
-        // Proceed with the form submission or navigation
+        var push = Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => ChooseProfileType()),
+        );
       }
     });
   }

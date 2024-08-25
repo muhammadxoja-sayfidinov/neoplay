@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:neoplay/core/constants/colors.dart';
 import 'package:neoplay/core/constants/style.dart';
+import 'package:neoplay/presentation/screens/Login%20and%20registration/enable_protection.dart';
 import 'package:neoplay/presentation/widgets/custom_button.dart';
 
 class SuccessfullyRegistered extends StatefulWidget {
@@ -52,7 +53,12 @@ class _SuccessfullyRegisteredState extends State<SuccessfullyRegistered> {
                       48.sp.verticalSpace,
                       Row(
                         children: [
-                          CustomButton(color: red, width: 300.sp, name: "Himoyani yoqish", onPressed: (){}),
+                          CustomButton(color: red, width: 300.sp, name: "Himoyani yoqish", onPressed: (){
+                            var push = Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => EnableProtection()),
+                            );
+                          }),
                           32.sp.horizontalSpace,
                           CustomButton(color: grey, width: 200.sp, name: "Keyinroq", onPressed: (){}),
                         ],

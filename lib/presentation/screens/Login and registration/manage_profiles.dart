@@ -128,8 +128,8 @@ class _ManageProfilesState extends State<ManageProfiles> {
               ],
             ),
             Positioned(
-              top: 10.h,
-              right: 10.w,
+              top: 30.h,
+              right: 30.w,
               child: TextButton(
                child:  SvgPicture.asset(
                   'assets/images/edit_logo.svg',

@@ -15,8 +15,7 @@ class VerificationCodePage extends StatefulWidget {
 
 class _VerificationCodePageState extends State<VerificationCodePage> {
   final _formKey = GlobalKey<FormState>();
-  final List<TextEditingController> _controllers =
-  List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
 
   bool _showError = false;
@@ -53,7 +52,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: List.generate(6, (index) {
                         return Padding(
-                          padding: EdgeInsets.all(4),
+                          padding: EdgeInsets.all(4.w),
                           child: _buildCodeField(
                               _controllers[index], _focusNodes[index], index),
                         );
@@ -89,7 +88,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
             Container(
               width: 390.sp,
               child: Image(image: AssetImage('assets/images/Logo.png')),
-            )
+            ),
           ],
         ),
       ),
@@ -106,7 +105,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
         border: Border.all(
           color: focusNode.hasFocus
               ? Colors.white // Change border color to white when focused
-              : controller.text.isEmpty
+              : controller.text.isEmpty && _showError
               ? Colors.red
               : grey,
           width: 2.0,
@@ -151,7 +150,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     });
 
     if (!_showError) {
-      var push = Navigator.push(
+      Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => GetBirthday()),
       );

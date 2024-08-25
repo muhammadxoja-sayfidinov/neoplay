@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:neoplay/presentation/screens/main_pages/profile_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/saved_screen.dart';
+import 'package:neoplay/presentation/screens/main_pages/search_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/setting_screen.dart';
 
 import 'catalog_sceen.dart';
@@ -29,7 +30,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     Widget body = const ProfileScreen();
     switch (selectedPage) {
       case 0:
-        body = Container();
+        body =  SearchScreen();
         break;
       case 1:
         body = const ProfileScreen();

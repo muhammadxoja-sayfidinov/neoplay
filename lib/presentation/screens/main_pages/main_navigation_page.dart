@@ -60,7 +60,11 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           Positioned.fill(
             child: Column(
               children: [
-                Expanded(child: body),
+                Expanded(
+                    child: Padding(
+                  padding: EdgeInsets.only(right: 162.w, left: 85.w),
+                  child: body,
+                )),
               ],
             ),
           ),

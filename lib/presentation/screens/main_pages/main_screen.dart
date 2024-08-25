@@ -9,6 +9,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             'Avval ko’rilganlar',

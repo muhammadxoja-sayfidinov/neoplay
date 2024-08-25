@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neoplay/core/constants/style.dart';
 
@@ -8,6 +9,8 @@ class MovieCard extends StatelessWidget {
   final double imdbRating;
   final double kinopoiskRating;
   final double neoPlayRating;
+  final double width;
+  final double height;
 
   const MovieCard({
     Key? key,
@@ -15,6 +18,8 @@ class MovieCard extends StatelessWidget {
     required this.imdbRating,
     required this.kinopoiskRating,
     required this.neoPlayRating,
+    required this.width,
+    required this.height,
   }) : super(key: key);
 
   @override
@@ -28,8 +33,8 @@ class MovieCard extends StatelessWidget {
               borderRadius: BorderRadius.circular(15),
               child: Image.network(
                 imageUrl,
-                width: 236,
-                height: 329,
+                width: width,
+                height: height,
                 fit: BoxFit.cover,
               ),
             ),
@@ -37,38 +42,44 @@ class MovieCard extends StatelessWidget {
             Positioned(
               top: 8,
               left: 8,
-              child: Row(
+              child: Wrap(
                 children: [
-                  _buildRatingBadge('assets/images/logo_imdb.svg', imdbRating, Colors.yellow),
+                  _buildRatingBadge('assets/images/logo_imdb.svg', imdbRating,
+                      Colors.yellow, 23.w, 8.h),
                   SizedBox(width: 4),
-                  _buildRatingBadge('assets/images/logo_poisk.svg', kinopoiskRating, Colors.orange),
+                  _buildRatingBadge('assets/images/logo_poisk.svg',
+                      kinopoiskRating, Colors.orange, 24.w, 15.h),
                   SizedBox(width: 4),
-                  _buildRatingBadge('assets/images/logo_neoplay.svg', neoPlayRating, Colors.red),
+                  _buildRatingBadge('assets/images/logo_neoplay.svg',
+                      neoPlayRating, Colors.red, 45.w, 14.h),
                 ],
               ),
             ),
           ],
         ),
-
       ],
     );
   }
 
-  Widget _buildRatingBadge(String source, double rating, Color color) {
+  Widget _buildRatingBadge(String source, double rating, Color color,
+      double imgWidth, double imgHeight) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(8),
       ),
-      child: Row(
+      child: Wrap(
         children: [
-          SvgPicture.asset(source),
-          SizedBox(width: 4),
-          Text(
-            rating.toStringAsFixed(1),
-            style: CustomTextStyle.style600.copyWith(color: Colors.red)
+          SvgPicture.asset(
+            source,
+            width: imgWidth,
+            height: imgHeight,
           ),
+          SizedBox(width: 4.w),
+          Text(rating.toStringAsFixed(1),
+              style: CustomTextStyle.style400
+                  .copyWith(color: Colors.red, fontSize: 12.sp)),
         ],
       ),
     );

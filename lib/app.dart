@@ -13,15 +13,16 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body:Center(
-        child: MovieCard(
-        imageUrl: 'http://asilmedia.org/uploads/mini/fullstory/8f/49c9afb79ba4fa50320ab6f504f3ef.jpg',
-
+      body: Center(
+          child: MovieCard(
+        width: 200,
+        height: 400,
+        imageUrl:
+            'http://asilmedia.org/uploads/mini/fullstory/8f/49c9afb79ba4fa50320ab6f504f3ef.jpg',
         imdbRating: 7.2,
         kinopoiskRating: 7.2,
         neoPlayRating: 7.2,
-      )
-      ),
+      )),
     );
   }
 }

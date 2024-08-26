@@ -32,19 +32,32 @@ class MainScreen extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25.r),
                         ),
-                        child: Wrap(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
-                              width: 451.w,
-                              height: 255.h,
-                              child: MovieCard(
+                            Wrap(
+                              children: [
+                                SizedBox(
+                                  width: 451.w,
                                   height: 255.h,
-                                  width: 451.h,
-                                  imageUrl:
-                                      'https://wp-s.ru/wallpapers/7/0/470920498858434/kollin-farrel-i-kejt-bekinsejl.jpg',
-                                  imdbRating: 7.3,
-                                  kinopoiskRating: 11.1,
-                                  neoPlayRating: 2.3),
+                                  child: MovieCard(
+                                      height: 255.h,
+                                      width: 451.h,
+                                      imageUrl:
+                                          'https://wp-s.ru/wallpapers/7/0/470920498858434/kollin-farrel-i-kejt-bekinsejl.jpg',
+                                      imdbRating: 7.3,
+                                      kinopoiskRating: 11.1,
+                                      neoPlayRating: 2.3),
+                                )
+                              ],
+                            ),
+                            12.verticalSpace,
+                            Text(
+                              'Koperatsiya maxfiy hamkorlik',
+                              style: CustomTextStyle.style600.copyWith(
+                                fontSize: 19.sp,
+                              ),
                             )
                           ],
                         ),

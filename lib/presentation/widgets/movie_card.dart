@@ -45,13 +45,13 @@ class MovieCard extends StatelessWidget {
               child: Wrap(
                 children: [
                   _buildRatingBadge('assets/images/logo_imdb.svg', imdbRating,
-                      Colors.yellow, 23.w, 8.h),
+                      Colors.yellow, 23.w, 14.h),
                   SizedBox(width: 4),
                   _buildRatingBadge('assets/images/logo_poisk.svg',
-                      kinopoiskRating, Colors.orange, 24.w, 15.h),
+                      kinopoiskRating, Colors.orange, 21.w, 14.h),
                   SizedBox(width: 4),
                   _buildRatingBadge('assets/images/logo_neoplay.svg',
-                      neoPlayRating, Colors.red, 45.w, 14.h),
+                      neoPlayRating, Colors.red, 43.w, 14.h),
                 ],
               ),
             ),
@@ -64,7 +64,7 @@ class MovieCard extends StatelessWidget {
   Widget _buildRatingBadge(String source, double rating, Color color,
       double imgWidth, double imgHeight) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(8),
@@ -79,7 +79,7 @@ class MovieCard extends StatelessWidget {
           SizedBox(width: 4.w),
           Text(rating.toStringAsFixed(1),
               style: CustomTextStyle.style400
-                  .copyWith(color: Colors.red, fontSize: 12.sp)),
+                  .copyWith(color: Colors.white, fontSize: 12.sp)),
         ],
       ),
     );

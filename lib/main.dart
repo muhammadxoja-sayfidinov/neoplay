@@ -3,6 +3,7 @@ import 'package:neoplay/presentation/screens/Login%20and%20registration/access%2
 import 'package:neoplay/presentation/screens/Login%20and%20registration/enter.dart';
 import 'package:neoplay/presentation/screens/Login%20and%20registration/language_selection.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:neoplay/presentation/screens/main_pages/main_navigation_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,10 +26,10 @@ class MyApp extends StatelessWidget {
             primarySwatch: Colors.blue,
             textTheme: Typography.englishLike2018.apply(fontSizeFactor: 1.sp),
           ),
-          home: Enter(),
+          home: const MainNavigationPage(),
           routes: {
             LanguageSelection.id: (context) => const LanguageSelection(),
-            AccesViaQrCode.id: (context)=> const AccesViaQrCode(),
+            AccesViaQrCode.id: (context) => const AccesViaQrCode(),
           },
         );
       },

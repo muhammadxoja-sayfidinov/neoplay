@@ -34,7 +34,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         body = SearchScreen();
         break;
       case 1:
-        body = const MainScreen();
+        body = MainScreen();
         break;
       case 2:
         body = const CatalogSceen();
@@ -61,7 +61,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
             child: Column(
               children: [
                 Expanded(
-
                     child: Padding(
                   padding: EdgeInsets.only(left: 162.w, right: 85.w),
                   child: body,

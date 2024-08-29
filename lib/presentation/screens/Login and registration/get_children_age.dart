@@ -14,6 +14,20 @@ class GetChildrenAge extends StatefulWidget {
 class _GetChildrenAgeState extends State<GetChildrenAge> {
   int selectedAge = 12; // Default selected age
 
+  // FocusNode larni e'lon qilish
+  final List<FocusNode> ageFocusNodes = List.generate(4, (_) => FocusNode());
+  final FocusNode saveButtonFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    // FocusNode larni tozalash
+    for (var node in ageFocusNodes) {
+      node.dispose();
+    }
+    saveButtonFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -52,32 +66,36 @@ class _GetChildrenAgeState extends State<GetChildrenAge> {
                   SizedBox(height: 24.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [3, 6, 9, 12].map((age) {
+                    children: [3, 6, 9, 12].asMap().entries.map((entry) {
+                      int index = entry.key;
+                      int age = entry.value;
                       return GestureDetector(
                         onTap: () {
                           setState(() {
                             selectedAge = age;
                           });
                         },
-                        child: Container(
-                          width: 72.w,
-                          height: 72.w,
-                          decoration: BoxDecoration(
-                            color: grey,
-                           
-                            border: Border.all(
-                              color: selectedAge == age ? Colors.red : Colors.transparent,
-                              width: 4.w,
+                        child: Focus(
+                          focusNode: ageFocusNodes[index], // Fokusni qo'shish
+                          child: Container(
+                            width: 72.w,
+                            height: 72.w,
+                            decoration: BoxDecoration(
+                              color: grey,
+                              border: Border.all(
+                                color: selectedAge == age ? Colors.red : Colors.transparent,
+                                width: 4.w,
+                              ),
+                              borderRadius: BorderRadius.circular(32.r),
                             ),
-                            borderRadius: BorderRadius.circular(32.r)
-                          ),
-                          child: Center(
-                            child: Text(
-                              '$age',
-                              style: TextStyle(
-                                fontSize: 28.sp,
-                                fontWeight: FontWeight.bold,
-                                color:  Colors.white,
+                            child: Center(
+                              child: Text(
+                                '$age',
+                                style: TextStyle(
+                                  fontSize: 28.sp,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
@@ -86,13 +104,18 @@ class _GetChildrenAgeState extends State<GetChildrenAge> {
                     }).toList(),
                   ),
                   SizedBox(height: 32.h),
-
-                  CustomButton(color: red, width: double.infinity, name: "O'zgarishlarni saqlash", onPressed: (){
-                    var push = Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SuccessfullyRegistered()),
-                    );
-                  })
+                  CustomButton(
+                    color: red,
+                    width: double.infinity,
+                    name: "O'zgarishlarni saqlash",
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SuccessfullyRegistered()),
+                      );
+                    },
+                    focusNode: saveButtonFocusNode, // Fokusni qo'shish
+                  ),
                 ],
               ),
             ),

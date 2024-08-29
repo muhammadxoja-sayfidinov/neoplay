@@ -7,13 +7,14 @@ class CustomTextField extends StatelessWidget {
   final String hintText;
   final bool obscureText;
   final TextInputType keyboardType;
+  final FocusNode focusNode;
 
   const CustomTextField({
     Key? key,
-
     required this.hintText,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
+    required this.focusNode,  // FocusNode qo'shildi
   }) : super(key: key);
 
   @override
@@ -21,6 +22,7 @@ class CustomTextField extends StatelessWidget {
     return Container(
       height: 60.h,
       child: TextField(
+        focusNode: focusNode,  // FocusNode ni TextField ga bog'lash
         obscureText: obscureText,
         keyboardType: keyboardType,
         style: TextStyle(color: Colors.white),
@@ -47,7 +49,5 @@ class CustomTextField extends StatelessWidget {
         ),
       ),
     );
-
-
   }
 }

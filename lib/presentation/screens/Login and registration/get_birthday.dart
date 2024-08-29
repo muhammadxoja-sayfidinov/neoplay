@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:neoplay/presentation/screens/Login%20and%20registration/choose_profile_type.dart';
 import 'package:neoplay/presentation/widgets/Custom_background.dart';
-
 import '../../../core/constants/colors.dart';
 import '../../../core/constants/style.dart';
 import '../../widgets/custom_button.dart';
@@ -22,6 +21,7 @@ class _GetBirthdayState extends State<GetBirthday> {
   final FocusNode _dayFocusNode = FocusNode();
   final FocusNode _monthFocusNode = FocusNode();
   final FocusNode _yearFocusNode = FocusNode();
+  final FocusNode _continueButtonFocusNode = FocusNode();
 
   bool _isDayValid = true;
   bool _isMonthValid = true;
@@ -37,7 +37,7 @@ class _GetBirthdayState extends State<GetBirthday> {
       _showError = !(_isDayValid && _isMonthValid && _isYearValid);
 
       if (!_showError) {
-        var push = Navigator.push(
+        Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => ChooseProfileType()),
         );
@@ -72,6 +72,7 @@ class _GetBirthdayState extends State<GetBirthday> {
   void _onYearChanged(String value) {
     if (value.length > 4) {
       _yearController.text = value.substring(0, 4);
+      FocusScope.of(context).requestFocus(_continueButtonFocusNode);
     }
   }
 
@@ -136,6 +137,7 @@ class _GetBirthdayState extends State<GetBirthday> {
     _dayFocusNode.dispose();
     _monthFocusNode.dispose();
     _yearFocusNode.dispose();
+    _continueButtonFocusNode.dispose();
     super.dispose();
   }
 
@@ -143,61 +145,62 @@ class _GetBirthdayState extends State<GetBirthday> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: CustomBackground(
-        widget:Row(
+        widget: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
-         children: [
-           Container(
-             width: 600.sp,
-             padding: EdgeInsets.symmetric(horizontal: 24.w),
-             child: Column(
-               crossAxisAlignment: CrossAxisAlignment.start,
-               mainAxisAlignment: MainAxisAlignment.center,
-               children: [
-                 Text(
-                   "Tug’ilgan kungizni kiriting",
-                   style: CustomTextStyle.style600.copyWith(fontSize: 38.sp),
-                 ),
-                 SizedBox(height: 16.h),
-                 Text(
-                   'Bu bilan sizga mos film va seriallar tavsiya qilishimiz osonlashadi',
-                   style: CustomTextStyle.style400.copyWith(
-                     color: Colors.white,
-                     fontSize: 28.sp,
-                   ),
-                 ),
-                 SizedBox(height: 16.h),
-                 if (_showError)
-                   Text(
-                     "Kataklar to'liq emas",
-                     style: TextStyle(color: Colors.red, fontSize: 24.sp),
-                   ),
-                 SizedBox(height: 16.h),
-                 Row(
-                   children: [
-                     _buildCodeField(_dayController, _dayFocusNode, 100.w, 'Kun'),
-                     SizedBox(width: 16.w),
-                     _buildCodeField(_monthController, _monthFocusNode, 100.w, 'Oy'),
-                     SizedBox(width: 16.w),
-                     _buildCodeField(_yearController, _yearFocusNode, 140.w, 'Yil'),
-                   ],
-                 ),
-                 SizedBox(height: 32.h),
-                 CustomButton(
-                   onPressed: _validateAndSubmit,
-                   name: 'Davom etish',
-                   width: double.infinity,
-                   color: red,
-                 ),
-               ],
-             ),
-           ),
-           Container(
-             width: 390.sp,
-             child: Image(image: AssetImage('assets/images/Logo.png')),
-           )
-         ],
-        )
+          children: [
+            Container(
+              width: 600.sp,
+              padding: EdgeInsets.symmetric(horizontal: 24.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Tug’ilgan kungizni kiriting",
+                    style: CustomTextStyle.style600.copyWith(fontSize: 38.sp),
+                  ),
+                  SizedBox(height: 16.h),
+                  Text(
+                    'Bu bilan sizga mos film va seriallar tavsiya qilishimiz osonlashadi',
+                    style: CustomTextStyle.style400.copyWith(
+                      color: Colors.white,
+                      fontSize: 28.sp,
+                    ),
+                  ),
+                  SizedBox(height: 16.h),
+                  if (_showError)
+                    Text(
+                      "Kataklar to'liq emas",
+                      style: TextStyle(color: Colors.red, fontSize: 24.sp),
+                    ),
+                  SizedBox(height: 16.h),
+                  Row(
+                    children: [
+                      _buildCodeField(_dayController, _dayFocusNode, 100.w, 'Kun'),
+                      SizedBox(width: 16.w),
+                      _buildCodeField(_monthController, _monthFocusNode, 100.w, 'Oy'),
+                      SizedBox(width: 16.w),
+                      _buildCodeField(_yearController, _yearFocusNode, 140.w, 'Yil'),
+                    ],
+                  ),
+                  SizedBox(height: 32.h),
+                  CustomButton(
+                    onPressed: _validateAndSubmit,
+                    name: 'Davom etish',
+                    width: double.infinity,
+                    color: red,
+                    focusNode: _continueButtonFocusNode, // Fokusni qo'shish
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              width: 390.sp,
+              child: Image(image: AssetImage('assets/images/Logo.png')),
+            ),
+          ],
+        ),
       ),
     );
   }

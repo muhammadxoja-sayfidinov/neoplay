@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import 'package:neoplay/core/constants/colors.dart';
+import 'package:neoplay/core/constants/style.dart';
 import 'package:neoplay/presentation/screens/Login%20and%20registration/get_birthday.dart';
 import 'package:neoplay/presentation/widgets/Custom_background.dart';
 import 'package:neoplay/presentation/widgets/custom_button.dart';
-
-import '../../../core/constants/style.dart';
 
 class VerificationCodePage extends StatefulWidget {
   @override
@@ -17,8 +15,19 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
   final _formKey = GlobalKey<FormState>();
   final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
+  final FocusNode _submitButtonFocusNode = FocusNode(); // Submit tugmasi uchun FocusNode
 
   bool _showError = false;
+
+  @override
+  void dispose() {
+    // FocusNode larni tozalash
+    for (var node in _focusNodes) {
+      node.dispose();
+    }
+    _submitButtonFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,6 +82,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                     name: 'Tasdiqlash',
                     width: double.infinity,
                     color: red,
+                    focusNode: _submitButtonFocusNode, // Fokusni qo'shish
                   ),
                   SizedBox(height: 16.h),
                   Text(
@@ -135,6 +145,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
               _focusNodes[index + 1].requestFocus();
             } else {
               _focusNodes[index].unfocus();
+              FocusScope.of(context).requestFocus(_submitButtonFocusNode); // Submit tugmasiga fokusni o'tkazish
             }
           } else if (value.isEmpty && index > 0) {
             _focusNodes[index - 1].requestFocus();

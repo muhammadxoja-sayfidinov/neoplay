@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:neoplay/core/constants/colors.dart';
 import 'package:neoplay/core/constants/style.dart';
 import 'package:neoplay/presentation/widgets/custom_button.dart';
-
 import '../main_pages/main_navigation_page.dart';
 
 class EnableProtection extends StatefulWidget {
@@ -16,6 +15,20 @@ class EnableProtection extends StatefulWidget {
 class _EnableProtectionState extends State<EnableProtection> {
   List<TextEditingController> pinControllers = List.generate(4, (_) => TextEditingController());
   List<FocusNode> focusNodes = List.generate(4, (_) => FocusNode());
+
+  final FocusNode continueButtonFocusNode = FocusNode();
+  final FocusNode cancelButtonFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    // FocusNode larni tozalash
+    for (var node in focusNodes) {
+      node.dispose();
+    }
+    continueButtonFocusNode.dispose();
+    cancelButtonFocusNode.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +48,7 @@ class _EnableProtectionState extends State<EnableProtection> {
                 Container(
                   width: 390.sp,
                   child: Image(image: AssetImage('assets/images/Logo.png')),
-                )
+                ),
               ],
             ),
             Expanded(
@@ -62,7 +75,7 @@ class _EnableProtectionState extends State<EnableProtection> {
                         child: Container(
                           padding: EdgeInsets.only(bottom: 28.sp),
                           width: 72.w,
-                          height: 72.w, // Kvadrat inputlar uchun width va height teng
+                          height: 72.w,
                           decoration: BoxDecoration(
                             color: Colors.grey[850],
                             borderRadius: BorderRadius.circular(20.r),
@@ -92,6 +105,7 @@ class _EnableProtectionState extends State<EnableProtection> {
                                   FocusScope.of(context).requestFocus(focusNodes[index + 1]);
                                 } else {
                                   focusNodes[index].unfocus();
+                                  FocusScope.of(context).requestFocus(continueButtonFocusNode);
                                 }
                               } else if (value.isEmpty && index > 0) {
                                 FocusScope.of(context).requestFocus(focusNodes[index - 1]);
@@ -104,13 +118,26 @@ class _EnableProtectionState extends State<EnableProtection> {
                     }),
                   ),
                   SizedBox(height: 20.h),
-                  CustomButton(color: red, width: 380.w, name: "Davom etish", onPressed: (){
-                    var push = Navigator.push(
+                  CustomButton(
+                    color: red,
+                    width: 380.w,
+                    name: "Davom etish",
+                    onPressed: () {
+                      Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => MainNavigationPage()));
-                  }),
+                        MaterialPageRoute(builder: (context) => MainNavigationPage()),
+                      );
+                    },
+                    focusNode: continueButtonFocusNode, // Fokus qo'shish
+                  ),
                   SizedBox(height: 20.h),
-                  CustomButton(color: grey, width: 380.w, name: "Bekor qilish", onPressed: (){}),
+                  CustomButton(
+                    color: grey,
+                    width: 380.w,
+                    name: "Bekor qilish",
+                    onPressed: () {},
+                    focusNode: cancelButtonFocusNode, // Fokus qo'shish
+                  ),
                 ],
               ),
             ),

@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:neoplay/core/constants/style.dart';
 
 class MovieCard extends StatelessWidget {
   final String imageUrl;
-
   final double imdbRating;
   final double kinopoiskRating;
   final double neoPlayRating;
@@ -24,62 +22,98 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(15),
-              child: Image.network(
-                imageUrl,
-                width: width,
-                height: height,
-                fit: BoxFit.cover,
-              ),
-            ),
-            // Reytinglar
-            Positioned(
-              top: 8,
-              left: 8,
-              child: Wrap(
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16.0),
+        image: DecorationImage(
+          image: NetworkImage(imageUrl),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 10.h,
+            left: 10.w,
+            child:Container(
+
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  _buildRatingBadge('assets/images/logo_imdb.svg', imdbRating,
-                      Colors.yellow, 23.w, 14.h),
-                  SizedBox(width: 4),
-                  _buildRatingBadge('assets/images/logo_poisk.svg',
-                      kinopoiskRating, Colors.orange, 21.w, 14.h),
-                  SizedBox(width: 4),
-                  _buildRatingBadge('assets/images/logo_neoplay.svg',
-                      neoPlayRating, Colors.red, 43.w, 14.h),
+                  _buildRatingBadge(
+                    'assets/images/logo_imdb.svg',
+                    imdbRating,
+                    Colors.yellow,
+                    39.sp,
+                    14.sp,
+                    77.sp,
+                  ),
+                    5.horizontalSpace,
+                  _buildRatingBadge(
+                    'assets/images/logo_imdb.svg',
+                    kinopoiskRating,
+                    Colors.orange,
+                    30.sp,
+                    14.sp,
+                    70.w,
+                  ),
+                  5.horizontalSpace,
+                  _buildRatingBadge(
+                    'assets/images/logo_neoplay.svg',
+                    neoPlayRating,
+                    Colors.red,
+                    43.w,
+                    13.h,
+                    92.w,
+                  ),
                 ],
               ),
-            ),
-          ],
-        ),
-      ],
+
+            )
+          )
+
+        ],
+      ),
     );
   }
 
-  Widget _buildRatingBadge(String source, double rating, Color color,
-      double imgWidth, double imgHeight) {
+  Widget _buildRatingBadge(
+      String logoPath,
+      double rating,
+      Color color,
+      double imgWidth,
+      double imgHeight,
+      double boxWidth,
+      ) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      width: boxWidth,
+      height: 30.sp,
+      padding: EdgeInsets.symmetric(vertical: 2.h, horizontal: 4.w),
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(8.0),
       ),
-      child: Wrap(
+      child: Row(
         children: [
-          SvgPicture.asset(
-            source,
-            width: imgWidth,
-            height: imgHeight,
+          Container(
+              width: imgWidth,
+              height: imgHeight,
+            child: SvgPicture.asset(
+            logoPath,
+            )
           ),
           SizedBox(width: 4.w),
-          Text(rating.toStringAsFixed(1),
-              style: CustomTextStyle.style400
-                  .copyWith(color: Colors.white, fontSize: 12.sp)),
+          Text(
+            rating.toString(),
+            style: TextStyle(
+              fontSize: 12.sp,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
         ],
       ),
     );

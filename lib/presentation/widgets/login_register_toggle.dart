@@ -1,15 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:neoplay/core/constants/colors.dart';
-import 'package:neoplay/main.dart';
 
 class LoginRegisterToggle extends StatefulWidget {
   final Function(int) onToggle;
   final String text1;
   final String text2;
+  final FocusNode focusToggle1;
+  final FocusNode focusToggle2;
 
-  LoginRegisterToggle(
-      {required this.onToggle, required this.text1, required this.text2});
+  LoginRegisterToggle({
+    required this.onToggle,
+    required this.text1,
+    required this.text2,
+    required this.focusToggle1,
+    required this.focusToggle2,
+  });
 
   @override
   _LoginRegisterToggleState createState() => _LoginRegisterToggleState();
@@ -20,24 +27,27 @@ class _LoginRegisterToggleState extends State<LoginRegisterToggle> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-
-      decoration: BoxDecoration(
-        color: Colors.black,
-        borderRadius: BorderRadius.circular(60.0),
-        border: Border.all(color: lightGrey,width: 2.sp)
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          _buildToggleButton(widget.text1, 0 ,130),
-          _buildToggleButton(widget.text2, 1,280),
-        ],
+    return FocusTraversalGroup(
+      policy: WidgetOrderTraversalPolicy(),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          borderRadius: BorderRadius.circular(60.0),
+          border: Border.all(color: lightGrey, width: 2.sp),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            _buildToggleButton(widget.text1, 0, 130, widget.focusToggle1),
+            _buildToggleButton(widget.text2, 1, 280, widget.focusToggle2),
+          ],
+        ),
       ),
     );
   }
 
-  Widget _buildToggleButton(String text, int index,double width) {
+  Widget _buildToggleButton(
+      String text, int index, double width, FocusNode focusNode) {
     return Container(
       width: width.sp,
       child: GestureDetector(
@@ -47,19 +57,48 @@ class _LoginRegisterToggleState extends State<LoginRegisterToggle> {
             widget.onToggle(index);
           });
         },
-        child: Container(
-          height: 50.sp,
+        child: Focus(
+          focusNode: focusNode,
+          onKey: (FocusNode node, RawKeyEvent event) {
+            if (event is RawKeyDownEvent) {
+              if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
+                  node == widget.focusToggle1) {
+                FocusScope.of(context).requestFocus(widget.focusToggle2);
+                return KeyEventResult.handled;
+              } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
+                  node == widget.focusToggle2) {
+                FocusScope.of(context).requestFocus(widget.focusToggle1);
+                return KeyEventResult.handled;
+              } else if (event.logicalKey == LogicalKeyboardKey.enter ||
+                  event.logicalKey == LogicalKeyboardKey.select) {
+                setState(() {
+                  _selectedIndex = index;
+                  widget.onToggle(index);
+                });
+                return KeyEventResult.handled;
+              }
+            }
+            return KeyEventResult.ignored;
+          },
+          child: Container(
 
-          decoration: BoxDecoration(
-            color: _selectedIndex == index ? Colors.red : Colors.black,
-            borderRadius: BorderRadius.circular(60.0),
-          ),
-          child: Center(
-            child: Text(
-              text,
-              style: TextStyle(
-                color: _selectedIndex == index ? Colors.white : lightGrey,
-                fontWeight: FontWeight.bold,
+            height: 50.sp,
+
+            decoration: BoxDecoration(
+
+              color: _selectedIndex == index ? Colors.red : Colors.black,
+              borderRadius: BorderRadius.circular(60.0),
+
+            ),
+
+            child: Center(
+
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: _selectedIndex == index ? Colors.white : lightGrey,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
           ),

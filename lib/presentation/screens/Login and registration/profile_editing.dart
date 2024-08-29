@@ -15,6 +15,24 @@ class ProfileEditing extends StatefulWidget {
 class _ProfileEditingState extends State<ProfileEditing> {
   String selectedGender = 'Erkak'; // Default selected gender
 
+  // Fokusni boshqarish uchun FocusNode larni e'lon qilish
+  final FocusNode profileNameFocusNode = FocusNode();
+  final FocusNode ageFocusNode = FocusNode();
+  final FocusNode maleGenderFocusNode = FocusNode();
+  final FocusNode femaleGenderFocusNode = FocusNode();
+  final FocusNode saveButtonFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    // FocusNode larni tozalash
+    profileNameFocusNode.dispose();
+    ageFocusNode.dispose();
+    maleGenderFocusNode.dispose();
+    femaleGenderFocusNode.dispose();
+    saveButtonFocusNode.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -60,7 +78,10 @@ class _ProfileEditingState extends State<ProfileEditing> {
                     style: CustomTextStyle.style400.copyWith(fontSize: 24.sp),
                   ),
                   20.verticalSpace,
-                  CustomTextField(hintText: "+998 93 908 70 85"),
+                  CustomTextField(
+                    hintText: "+998 93 908 70 85",
+                    focusNode: profileNameFocusNode, // Fokusni qo'shish
+                  ),
                   32.verticalSpace,
                   Text(
                     "Yosh",
@@ -71,6 +92,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                   CustomTextField(
                     hintText: "18+",
                     keyboardType: TextInputType.number,
+                    focusNode: ageFocusNode, // Fokusni qo'shish
                   ),
                   32.verticalSpace,
                   Text(
@@ -94,20 +116,23 @@ class _ProfileEditingState extends State<ProfileEditing> {
                                 selectedGender = 'Erkak';
                               });
                             },
-                            child: Container(
-                              height: 56.sp,
-                              decoration: BoxDecoration(
-                                color: selectedGender == 'Erkak'
-                                    ? grey
-                                    : lightGrey,
-                                borderRadius: BorderRadius.circular(50.r),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Erkak',
-                                  style: CustomTextStyle.style400.copyWith(
-                                    fontSize: 24.sp,
-                                    color: Colors.white,
+                            child: Focus(
+                              focusNode: maleGenderFocusNode, // Fokusni qo'shish
+                              child: Container(
+                                height: 56.sp,
+                                decoration: BoxDecoration(
+                                  color: selectedGender == 'Erkak'
+                                      ? grey
+                                      : lightGrey,
+                                  borderRadius: BorderRadius.circular(50.r),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Erkak',
+                                    style: CustomTextStyle.style400.copyWith(
+                                      fontSize: 24.sp,
+                                      color: Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -116,35 +141,35 @@ class _ProfileEditingState extends State<ProfileEditing> {
                         ),
                         20.horizontalSpace,
                         Expanded(
-
-
-                          child:  GestureDetector(
+                          child: GestureDetector(
                             onTap: () {
                               setState(() {
                                 selectedGender = 'Ayol';
                               });
                             },
-                            child: Container(
-                              height: 56.sp,
-                              decoration: BoxDecoration(
-                                color: selectedGender == 'Ayol'
-                                    ? grey
-                                    : lightGrey,
-                                borderRadius: BorderRadius.circular(50.r),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  'Ayol',
-                                  style: CustomTextStyle.style400.copyWith(
-                                    fontSize: 24.sp,
-                                    color:  Colors.white,
+                            child: Focus(
+                              focusNode: femaleGenderFocusNode, // Fokusni qo'shish
+                              child: Container(
+                                height: 56.sp,
+                                decoration: BoxDecoration(
+                                  color: selectedGender == 'Ayol'
+                                      ? grey
+                                      : lightGrey,
+                                  borderRadius: BorderRadius.circular(50.r),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    'Ayol',
+                                    style: CustomTextStyle.style400.copyWith(
+                                      fontSize: 24.sp,
+                                      color:  Colors.white,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
                         )
-
                       ],
                     ),
                   ),
@@ -156,6 +181,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                     onPressed: () {
                       // Implement save functionality here
                     },
+                    focusNode: saveButtonFocusNode, // Fokusni qo'shish
                   ),
                 ],
               ),

@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
@@ -48,6 +49,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     });
     contentFocusNode.requestFocus();
   }
+  bool openText = false;
 
   @override
   Widget build(BuildContext context) {
@@ -121,6 +123,12 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                   top: 0,
                   bottom: 0,
                   child: AnimatedContainer(
+                    onEnd: (){
+                      setState(() {
+                        const Duration(milliseconds: 500);
+                        openText = isDrawerOpen;
+                      });
+                    },
                     duration: const Duration(milliseconds: 300),
                     width: isDrawerOpen ? 240.w : 90.w,
                     height: 1080.h,
@@ -257,10 +265,11 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     required bool isFocused,
     required Function() onTap,
   }) {
+
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: isOpen ? 17.w : 0),
+        padding: EdgeInsets.symmetric(horizontal: isOpen ? 15.w : 0),
         height: 60.h,
         decoration: BoxDecoration(
           color: isSelected & isOpen
@@ -281,14 +290,15 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           isOpen ? MainAxisAlignment.start : MainAxisAlignment.center,
           children: [
             Icon(icon, color: Colors.white, size: 30.sp),
-            if (isOpen) ...[
-              SizedBox(width: 17.w),
-              Text(
-                text,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18.sp,
-                ),
+            if (openText && isOpen) ...[
+              Flexible(
+                child: Wrap(
+                    children:[
+                      SizedBox(width: 17.w),
+                  Text(text, style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.sp,
+                  ),maxLines: 1,overflow: TextOverflow.ellipsis,),],),
               ),
             ],
           ],

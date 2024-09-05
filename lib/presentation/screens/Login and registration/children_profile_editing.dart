@@ -29,7 +29,9 @@ class _ChildrenProfileEditingState extends State<ChildrenProfileEditing> {
     saveButtonFocusNode.dispose();
     super.dispose();
   }
-
+  void _handleSubmitted(String value, FocusNode nextFocusNode) {
+    FocusScope.of(context).requestFocus(nextFocusNode);
+  }
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -78,6 +80,7 @@ class _ChildrenProfileEditingState extends State<ChildrenProfileEditing> {
                     ),
                     20.verticalSpace,
                     CustomTextField(
+                      onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
                       hintText: "Bolalar profili",
                       focusNode: profileNameFocusNode, // Fokusni qo'shish
                     ),
@@ -90,6 +93,7 @@ class _ChildrenProfileEditingState extends State<ChildrenProfileEditing> {
                     20.verticalSpace,
                     CustomTextField(
                       hintText: "12-",
+                      onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
                       keyboardType: TextInputType.number,
                       focusNode: ageFocusNode, // Fokusni qo'shish
                     ),
@@ -115,5 +119,8 @@ class _ChildrenProfileEditingState extends State<ChildrenProfileEditing> {
         ),
       ),
     );
-  }
-}
+
+
+}}
+
+

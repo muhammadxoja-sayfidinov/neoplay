@@ -21,7 +21,9 @@ class _ProfileEditingState extends State<ProfileEditing> {
   final FocusNode maleGenderFocusNode = FocusNode();
   final FocusNode femaleGenderFocusNode = FocusNode();
   final FocusNode saveButtonFocusNode = FocusNode();
-
+  void _handleSubmitted(String value, FocusNode nextFocusNode) {
+    FocusScope.of(context).requestFocus(nextFocusNode);
+  }
   @override
   void dispose() {
     // FocusNode larni tozalash
@@ -79,6 +81,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                   ),
                   20.verticalSpace,
                   CustomTextField(
+                    onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
                     hintText: "+998 93 908 70 85",
                     focusNode: profileNameFocusNode, // Fokusni qo'shish
                   ),
@@ -90,6 +93,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                   ),
                   20.verticalSpace,
                   CustomTextField(
+                    onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
                     hintText: "18+",
                     keyboardType: TextInputType.number,
                     focusNode: ageFocusNode, // Fokusni qo'shish

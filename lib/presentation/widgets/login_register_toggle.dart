@@ -38,65 +38,71 @@ class _LoginRegisterToggleState extends State<LoginRegisterToggle> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            _buildToggleButton(widget.text1, 0, 130, widget.focusToggle1),
-            _buildToggleButton(widget.text2, 1, 280, widget.focusToggle2),
+            _buildToggleButton(widget.text1, 0, widget.focusToggle1),
+            _buildToggleButton(widget.text2, 1, widget.focusToggle2),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildToggleButton(
-      String text, int index, double width, FocusNode focusNode) {
-    return Container(
-      width: width.sp,
-      child: GestureDetector(
-        onTap: () {
+  Widget _buildToggleButton(String text, int index, FocusNode focusNode) {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          _selectedIndex = index;
+          widget.onToggle(index);
+        });
+      },
+      child: Focus(
+        focusNode: focusNode,
+        onFocusChange: (hasFocus) {
           setState(() {
-            _selectedIndex = index;
-            widget.onToggle(index);
+
           });
         },
-        child: Focus(
-          focusNode: focusNode,
-          onKey: (FocusNode node, RawKeyEvent event) {
-            if (event is RawKeyDownEvent) {
-              if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
-                  node == widget.focusToggle1) {
-                FocusScope.of(context).requestFocus(widget.focusToggle2);
-                return KeyEventResult.handled;
-              } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
-                  node == widget.focusToggle2) {
-                FocusScope.of(context).requestFocus(widget.focusToggle1);
-                return KeyEventResult.handled;
-              } else if (event.logicalKey == LogicalKeyboardKey.enter ||
-                  event.logicalKey == LogicalKeyboardKey.select) {
-                setState(() {
-                  _selectedIndex = index;
-                  widget.onToggle(index);
-                });
-                return KeyEventResult.handled;
-              }
+        onKey: (FocusNode node, RawKeyEvent event) {
+          if (event is RawKeyDownEvent) {
+            if (event.logicalKey == LogicalKeyboardKey.arrowRight &&
+                node == widget.focusToggle1) {
+              FocusScope.of(context).requestFocus(widget.focusToggle2);
+              return KeyEventResult.handled;
+            } else if (event.logicalKey == LogicalKeyboardKey.arrowLeft &&
+                node == widget.focusToggle2) {
+              FocusScope.of(context).requestFocus(widget.focusToggle1);
+              return KeyEventResult.handled;
+            } else if (event.logicalKey == LogicalKeyboardKey.enter ||
+                event.logicalKey == LogicalKeyboardKey.select) {
+              setState(() {
+                _selectedIndex = index;
+                widget.onToggle(index);
+              });
+              return KeyEventResult.handled;
             }
-            return KeyEventResult.ignored;
-          },
+          }
+          return KeyEventResult.ignored;
+        },
+        child: AnimatedOpacity(
+          opacity: _selectedIndex == index ? 1.0 : 0.6,
+          // Opacity based on selection
+          duration: const Duration(milliseconds: 300),
           child: Container(
-
             height: 50.sp,
-
+            width: 208.sp,
             decoration: BoxDecoration(
+              color: focusNode.hasFocus
+                  ? Colors.red
+                  : _selectedIndex == index
+                  ? lightGrey
+                  : Colors.black,
 
-              color: _selectedIndex == index ? Colors.red : Colors.black,
               borderRadius: BorderRadius.circular(60.0),
-
             ),
-
             child: Center(
-
               child: Text(
                 text,
                 style: TextStyle(
-                  color: _selectedIndex == index ? Colors.white : lightGrey,
+                  color:  Colors.white ,
                   fontWeight: FontWeight.bold,
                 ),
               ),

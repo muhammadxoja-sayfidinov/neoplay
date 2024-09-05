@@ -8,7 +8,9 @@ import '../../widgets/custom_text_field.dart';
 
 class SignUp extends StatelessWidget {
   const SignUp({super.key});
+  void _handleSubmitted(String value, FocusNode nextFocusNode) {
 
+  }
   @override
   Widget build(BuildContext context) {
     // FocusNode larni yarating
@@ -27,6 +29,7 @@ class SignUp extends StatelessWidget {
           ),
           20.h.verticalSpace,
           CustomTextField(
+            onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
             hintText: '+998',
             keyboardType: TextInputType.phone,
             focusNode: phoneFocusNode, // FocusNode qo'shildi
@@ -38,6 +41,7 @@ class SignUp extends StatelessWidget {
           ),
           20.h.verticalSpace,
           CustomTextField(
+            onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
             hintText: '',
             obscureText: true,
             focusNode: passwordFocusNode, // FocusNode qo'shildi
@@ -49,6 +53,7 @@ class SignUp extends StatelessWidget {
           ),
           20.h.verticalSpace,
           CustomTextField(
+            onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
             hintText: '',
             obscureText: true,
             focusNode: confirmPasswordFocusNode, // FocusNode qo'shildi

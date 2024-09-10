@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:neoplay/core/constants/style.dart';
 
+import '../../../data/models/models.dart';
+import '../../widgets/horizontal_movie_card.dart';
 import '../../widgets/tips_carousel.dart';
+import '../../widgets/vertical_movie_card.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -14,15 +18,6 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final FocusScopeNode _focusScopeNode = FocusScopeNode();
   int _focusedIndex = 0;
-
-  final List<String> _movies = [
-    'Kooperatsiya maxfiy hamkorlik',
-    'Chiroqni o\'chiring',
-    'Kooperatsiya maxfiy hamkorlik',
-    'Kooperatsiya maxfiy hamkorlik',
-    'Chiroqni o\'chiring',
-    'Kooperatsiya maxfiy hamkorlik',
-  ];
 
   final ScrollController _scrollController = ScrollController();
   final List<FocusNode> _focusNodes =
@@ -62,7 +57,6 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final pageController = PageController();
     int currentPage = 0;
-
     return Shortcuts(
       shortcuts: <LogicalKeySet, Intent>{
         LogicalKeySet(LogicalKeyboardKey.arrowRight): const NextFocusIntent(),
@@ -96,68 +90,122 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 353.h,
-                  child: ListView.builder(
-                    controller: _scrollController,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: _movies.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          // Handle tap (play movie, show details, etc.)
-                        },
-                        child: Focus(
-                          focusNode: _focusNodes[index],
-                          onFocusChange: (hasFocus) {
-                            setState(() {
-                              if (hasFocus) _focusedIndex = index;
-                            });
-                          },
-                          child: Container(
-                            width: 300,
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              border: Border.all(
-                                color: _focusedIndex == index
-                                    ? Colors.orange
-                                    : Colors.transparent,
-                                width: 3,
-                              ),
-                            ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Avval ko’rilganlar',
+                      style: CustomTextStyle.style600.copyWith(fontSize: 36.sp),
+                    ),
+                    24.verticalSpace,
+                    SizedBox(
+                      height: 293.sp,
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: movies.length,
+                        itemBuilder: (context, index) {
+                          return Focus(
+                            focusNode: _focusNodes[index],
+                            onFocusChange: (hasFocus) {
+                              setState(() {
+                                if (hasFocus) _focusedIndex = index;
+                              });
+                            },
                             child: InkWell(
                               onTap: () {
                                 _focusNodes[index].requestFocus();
                                 _scrollToIndex(index);
                               },
-                              child: Column(
-                                children: [
-                                  ClipRRect(
-                                    borderRadius: BorderRadius.circular(15),
-                                    child: Image.asset(
-                                      'assets/film_images/film6.png',
-                                      // Replace with actual image paths
-                                      width: 300,
-                                      height: 170,
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      _movies[index],
-                                      style: TextStyle(color: Colors.white),
-                                    ),
-                                  ),
-                                ],
+                              child: HorizontalMovieCard(
+                                focusedIndex: _focusedIndex,
+                                index: index,
                               ),
                             ),
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                          );
+                        },
+                      ),
+                    ),
+                    70.verticalSpace,
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Yangi filmlar',
+                      style: CustomTextStyle.style600.copyWith(fontSize: 36.sp),
+                    ),
+                    24.verticalSpace,
+                    SizedBox(
+                      height: 367.sp,
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: movies.length,
+                        itemBuilder: (context, index) {
+                          return Focus(
+                            focusNode: _focusNodes[index],
+                            onFocusChange: (hasFocus) {
+                              setState(() {
+                                if (hasFocus) _focusedIndex = index;
+                              });
+                            },
+                            child: InkWell(
+                              onTap: () {
+                                _focusNodes[index].requestFocus();
+                                _scrollToIndex(index);
+                              },
+                              child: VerticalMovieCard(
+                                focusedIndex: _focusedIndex,
+                                index: index,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    70.verticalSpace,
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Seriallar',
+                      style: CustomTextStyle.style600.copyWith(fontSize: 36.sp),
+                    ),
+                    24.verticalSpace,
+                    SizedBox(
+                      height: 367.sp,
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        scrollDirection: Axis.horizontal,
+                        itemCount: movies.length,
+                        itemBuilder: (context, index) {
+                          return Focus(
+                            focusNode: _focusNodes[index],
+                            onFocusChange: (hasFocus) {
+                              setState(() {
+                                if (hasFocus) _focusedIndex = index;
+                              });
+                            },
+                            child: InkWell(
+                              onTap: () {
+                                _focusNodes[index].requestFocus();
+                                _scrollToIndex(index);
+                              },
+                              child: VerticalMovieCard(
+                                focusedIndex: _focusedIndex,
+                                index: index,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                    70.verticalSpace,
+                  ],
                 ),
               ],
             ),
@@ -172,7 +220,7 @@ class _MainScreenState extends State<MainScreen> {
 
     if (newIndex < 0) {
       FocusScope.of(context).previousFocus();
-    } else if (newIndex < _movies.length) {
+    } else if (newIndex < movies.length) {
       setState(() {
         _focusedIndex = newIndex;
         _focusNodes[newIndex].requestFocus();

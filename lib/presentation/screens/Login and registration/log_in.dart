@@ -23,15 +23,9 @@
     final FocusNode phoneFocusNode = FocusNode();
     final FocusNode passwordFocusNode = FocusNode();
     final FocusNode loginButtonFocusNode = FocusNode();
+    bool onTap = false;
 
 
-    void _handleSubmitted(String value, FocusNode nextFocusNode) {
-     if(phoneFocusNode.hasFocus){
-          passwordFocusNode.requestFocus();
-     }else if(passwordFocusNode.hasFocus){
-       loginButtonFocusNode.requestFocus();
-     }
-    }
 
     @override
     Widget build(BuildContext context) {
@@ -91,9 +85,9 @@
                   20.h.verticalSpace,
                   CustomTextField(
                     hintText: '+998',
-                    onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
                     keyboardType: TextInputType.phone,
                     focusNode: phoneFocusNode,
+                    nextFocusNode:passwordFocusNode ,
                   ),
                   48.h.verticalSpace,
                   Text(
@@ -102,10 +96,10 @@
                   ),
                   20.h.verticalSpace,
                   CustomTextField(
-                    onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
                     hintText: '',
                     obscureText: true,
                     focusNode: passwordFocusNode,
+                    nextFocusNode:loginButtonFocusNode ,
                   ),
                   32.h.verticalSpace,
                   CustomButton(
@@ -131,7 +125,7 @@
     void _handleToggle(Direction direction) {
       if (direction == Direction.down) {
         if (qrFocusNode.hasFocus) {
-          googleFocusNode.requestFocus();
+
         } else if (googleFocusNode.hasFocus) {
           phoneFocusNode.requestFocus();
         } else if (phoneFocusNode.hasFocus) {
@@ -148,17 +142,14 @@
           googleFocusNode.requestFocus();
         } else if (googleFocusNode.hasFocus) {
           qrFocusNode.requestFocus();
-        }else if (qrFocusNode.hasFocus) {
+        } else if (qrFocusNode.hasFocus) {
           FocusScope.of(context).previousFocus();
         }
-
       }
     }
 
+
     void _toggleActivate() {
-      if(phoneFocusNode.hasFocus){
-        passwordFocusNode.requestFocus();
-      }
       if (qrFocusNode.hasFocus) {
         Navigator.pushNamed(context, AccesViaQrCode.id);
       } else if (googleFocusNode.hasFocus) {
@@ -168,6 +159,10 @@
           context,
           MaterialPageRoute(builder: (context) => MainNavigationPage()),
         );
+      }else if(phoneFocusNode.hasFocus|| passwordFocusNode.hasFocus){
+       setState(() {
+         onTap =true;
+       });
       }
     }
   }

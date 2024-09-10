@@ -61,8 +61,8 @@ class SignUp extends StatefulWidget {
                 ),
                 20.h.verticalSpace,
                 CustomTextField(
-                  onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
                   hintText: '+998',
+                  nextFocusNode: passwordFocusNode,
                   keyboardType: TextInputType.phone,
                   focusNode: phoneFocusNode, // FocusNode qo'shildi
                 ),
@@ -73,8 +73,8 @@ class SignUp extends StatefulWidget {
                 ),
                 20.h.verticalSpace,
                 CustomTextField(
-                  onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
                   hintText: '',
+                  nextFocusNode: confirmPasswordFocusNode,
                   obscureText: true,
                   focusNode: passwordFocusNode, // FocusNode qo'shildi
                 ),
@@ -85,9 +85,10 @@ class SignUp extends StatefulWidget {
                 ),
                 20.h.verticalSpace,
                 CustomTextField(
-                  onSubmitted: (value) => _handleSubmitted(value, FocusNode()),
                   hintText: '',
                   obscureText: true,
+                  nextFocusNode: signUpButtonFocusNode,
+
                   focusNode: confirmPasswordFocusNode, // FocusNode qo'shildi
                 ),
                 32.h.verticalSpace,

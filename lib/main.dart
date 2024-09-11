@@ -9,8 +9,50 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final FocusScopeNode _focusScopeNode = FocusScopeNode();
+  int _focusedIndex = 0;
+
+  final ScrollController _scrollController = ScrollController();
+  final List<FocusNode> _focusNodes =
+      List<FocusNode>.generate(6, (_) => FocusNode());
+
+  @override
+  void initState() {
+    super.initState();
+    for (var i = 0; i < _focusNodes.length; i++) {
+      _focusNodes[i].addListener(() {
+        if (_focusNodes[i].hasFocus) {
+          _scrollToIndex(i);
+        }
+      });
+    }
+  }
+
+  void _scrollToIndex(int index) {
+    final position = index * 320.0; // Har bir elementning balandligi
+    _scrollController.animateTo(
+      position,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    for (var node in _focusNodes) {
+      node.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +68,12 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'First Method',
+            darkTheme: ThemeData(
+              useMaterial3: true, // Material 3 ni yoqish
+              colorScheme: ColorScheme.dark(
+                brightness: Brightness.dark,
+              ),
+            ),
             theme: ThemeData(
               brightness: Brightness.dark,
               primarySwatch: Colors.blue,

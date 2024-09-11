@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neoplay/core/constants/colors.dart';
 import 'package:neoplay/core/constants/style.dart';
 import 'package:neoplay/data/models/models.dart';
-import 'package:neoplay/presentation/widgets/movie_card.dart';
 
 import '../../widgets/vertical_movie_card.dart';
 
@@ -23,7 +22,8 @@ class _SearchScreenState extends State<SearchScreen> {
   int _focusedIndex = 0;
 
   final ScrollController _scrollController = ScrollController();
-  final List<FocusNode> _focusNodes = List<FocusNode>.generate(movies.length, (_) => FocusNode());
+  final List<FocusNode> _focusNodes =
+      List<FocusNode>.generate(movies.length, (_) => FocusNode());
   bool haveSearch = false;
 
   // Sample List of movies for the grid view
@@ -48,11 +48,11 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-
   @override
   void initState() {
     super.initState();
-    searchFieldFocusNode.requestFocus(); // Automatically focus on the search field
+    searchFieldFocusNode
+        .requestFocus(); // Automatically focus on the search field
   }
 
   void _handleKeyEvent(RawKeyEvent event) {
@@ -60,7 +60,8 @@ class _SearchScreenState extends State<SearchScreen> {
       LogicalKeyboardKey key = event.logicalKey;
 
       if (key == LogicalKeyboardKey.arrowRight) {
-        if (_focusNodes[_focusedIndex].hasFocus && _focusedIndex < movies.length - 1) {
+        if (_focusNodes[_focusedIndex].hasFocus &&
+            _focusedIndex < movies.length - 1) {
           _moveFocus(1);
         }
       } else if (key == LogicalKeyboardKey.arrowDown) {
@@ -75,12 +76,12 @@ class _SearchScreenState extends State<SearchScreen> {
         } else {
           FocusScope.of(context).previousFocus();
         }
-      } else if (key == LogicalKeyboardKey.select || key == LogicalKeyboardKey.enter) {
+      } else if (key == LogicalKeyboardKey.select ||
+          key == LogicalKeyboardKey.enter) {
         FocusScope.of(context).nextFocus();
       }
     }
   }
-
 
   void _moveFocus(int direction) {
     int newIndex = _focusedIndex + direction;
@@ -92,7 +93,6 @@ class _SearchScreenState extends State<SearchScreen> {
       _scrollToIndex(newIndex);
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -130,7 +130,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     decoration: InputDecoration(
                       icon: Container(
                         width: 36.w,
-                        child: SvgPicture.asset("assets/images/search_logo.svg"),
+                        child:
+                            SvgPicture.asset("assets/images/search_logo.svg"),
                       ),
                       hintText: "Film, serial, multfilm izlang",
                       hintStyle: CustomTextStyle.style400.copyWith(
@@ -146,11 +147,11 @@ class _SearchScreenState extends State<SearchScreen> {
                 ),
               ),
               32.h.verticalSpace,
-
               // Search Results
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.symmetric(horizontal: 48.sp, vertical: 32.sp),
+                padding:
+                    EdgeInsets.symmetric(horizontal: 48.sp, vertical: 32.sp),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(60.r),
                   color: GilosNeutral800,
@@ -167,62 +168,64 @@ class _SearchScreenState extends State<SearchScreen> {
                     ),
                     32.sp.verticalSpace,
                     haveSearch
-
                         ? Container(
-                      padding: EdgeInsets.symmetric(horizontal: 145.sp),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Bunday film\nmavjud emas",
-                            style: CustomTextStyle.style600.copyWith(fontSize: 66.sp),
-                          ),
-                          60.w.horizontalSpace,
-                          Image.asset(
-                            "assets/images/search_is_not.png",
-                            width: 245.w,
-                            height: 291.h,
-                          ),
-                        ],
-                      ),
-                    )
+                            padding: EdgeInsets.symmetric(horizontal: 145.sp),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Bunday film\nmavjud emas",
+                                  style: CustomTextStyle.style600
+                                      .copyWith(fontSize: 66.sp),
+                                ),
+                                60.w.horizontalSpace,
+                                Image.asset(
+                                  "assets/images/search_is_not.png",
+                                  width: 245.w,
+                                  height: 291.h,
+                                ),
+                              ],
+                            ),
+                          )
                         : Container(
-                          height: 630.h,
-                          child: SingleChildScrollView(
-                            controller: _scrollController,
-                            scrollDirection: Axis.vertical,
-                            child: GridView.builder(
-
-                                                      shrinkWrap: true,  // Make GridView shrink to fit its content
-                                                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                                        crossAxisCount: 6,
-                                                        childAspectRatio: 0.7,
-                                                      ),
-                                                      itemCount: movies.length,
-                                                      itemBuilder: (context, index) {
-                                                        return Focus(
-                                                          focusNode: _focusNodes[index],
-                                                          onFocusChange: (hasFocus) {
-                                                            setState(() {
-                                                              if (hasFocus) _focusedIndex = index;
-                                                            });
-                                                          },
-                                                          child: InkWell(
-                                                            onTap: () {
-                                                              _focusNodes[index].requestFocus();
-                                                              _scrollToIndex(index);
-                                                            },
-                                                            child: VerticalMovieCard(
-                                                              focusedIndex: _focusedIndex,
-                                                              index: index,
-                                                            ),
-                                                          ),
-                                                        );
-                                                      },
+                            height: 630.h,
+                            child: SingleChildScrollView(
+                              physics: const NeverScrollableScrollPhysics(),
+                              controller: _scrollController,
+                              scrollDirection: Axis.vertical,
+                              child: GridView.builder(
+                                shrinkWrap: true,
+                                // Make GridView shrink to fit its content
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 6,
+                                  childAspectRatio: 0.59,
+                                ),
+                                itemCount: movies.length,
+                                itemBuilder: (context, index) {
+                                  return Focus(
+                                    focusNode: _focusNodes[index],
+                                    onFocusChange: (hasFocus) {
+                                      setState(() {
+                                        if (hasFocus) _focusedIndex = index;
+                                      });
+                                    },
+                                    child: InkWell(
+                                      onTap: () {
+                                        _focusNodes[index].requestFocus();
+                                        _scrollToIndex(index);
+                                      },
+                                      child: VerticalMovieCard(
+                                        focusedIndex: _focusedIndex,
+                                        index: index,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
                   ],
                 ),
               ),
@@ -233,7 +236,6 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-
   @override
   void dispose() {
     _searchController.dispose();
@@ -241,6 +243,4 @@ class _SearchScreenState extends State<SearchScreen> {
     gridFocusNode.dispose();
     super.dispose();
   }
-
-
 }

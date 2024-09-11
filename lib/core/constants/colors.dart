@@ -13,3 +13,4 @@ const Color errorColor = Color.fromRGBO(235, 94, 15, 1);
 const Color orange = Color.fromRGBO(255, 85, 0, 1);
 const Color gilosNeutral = Color.fromRGBO(211, 211, 212, 1);
 const Color gilosNeutralWhite = Color.fromRGBO(255, 255, 255, 1);
+const Color GilosNeutral800 = Color.fromRGBO(20, 22, 25, 1);

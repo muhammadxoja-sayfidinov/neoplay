@@ -23,12 +23,12 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: width,
-      height: height,
+      width: width.w,
+      // height: height.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(16.0),
         image: DecorationImage(
-          image: NetworkImage(imageUrl),
+          image: AssetImage(imageUrl), // Changed to AssetImage for local images
           fit: BoxFit.cover,
         ),
       ),
@@ -37,44 +37,39 @@ class MovieCard extends StatelessWidget {
           Positioned(
             top: 10.h,
             left: 10.w,
-            child:Container(
-
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  _buildRatingBadge(
-                    'assets/images/logo_imdb.svg',
-                    imdbRating,
-                    Colors.yellow,
-                    39.sp,
-                    14.sp,
-                    77.sp,
-                  ),
-                    5.horizontalSpace,
-                  _buildRatingBadge(
-                    'assets/images/logo_imdb.svg',
-                    kinopoiskRating,
-                    Colors.orange,
-                    30.sp,
-                    14.sp,
-                    70.w,
-                  ),
-                  5.horizontalSpace,
-                  _buildRatingBadge(
-                    'assets/images/logo_neoplay.svg',
-                    neoPlayRating,
-                    Colors.red,
-                    43.w,
-                    13.h,
-                    92.w,
-                  ),
-                ],
-              ),
-
-            )
-          )
-
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                _buildRatingBadge(
+                  'assets/images/logo_imdb.svg',
+                  imdbRating,
+                  Colors.yellow,
+                  39.sp,
+                  14.sp,
+                  77.sp,
+                ),
+                5.horizontalSpace,
+                _buildRatingBadge(
+                  'assets/images/logo_imdb.svg',
+                  kinopoiskRating,
+                  Colors.orange,
+                  30.sp,
+                  14.sp,
+                  70.w,
+                ),
+                5.horizontalSpace,
+                _buildRatingBadge(
+                  'assets/images/logo_neoplay.svg',
+                  neoPlayRating,
+                  Colors.red,
+                  43.w,
+                  13.h,
+                  92.w,
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -99,11 +94,11 @@ class MovieCard extends StatelessWidget {
       child: Row(
         children: [
           Container(
-              width: imgWidth,
-              height: imgHeight,
+            width: imgWidth.w,
+            height: imgHeight.sp,
             child: SvgPicture.asset(
-            logoPath,
-            )
+              logoPath,
+            ),
           ),
           SizedBox(width: 4.w),
           Text(

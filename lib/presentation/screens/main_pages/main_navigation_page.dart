@@ -27,7 +27,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   int selectedPage = 1;
   int _focusedDrawerItem = 0;
 
-  final FocusNode drawerFocusNode = FocusNode();
+ static final FocusNode drawerFocusNode = FocusNode();
 
   final FocusNode contentFocusNode = FocusNode();
 
@@ -222,8 +222,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   }
 
   void _handleMove(Direction direction) {
-    if (direction == Direction.left && !isDrawerOpen) {
-      // Open drawer and move focus to it
+    if ( direction == Direction.left && !isDrawerOpen) {
+
       setState(() {
         isDrawerOpen = true;
         _focusedDrawerItem = selectedPage;

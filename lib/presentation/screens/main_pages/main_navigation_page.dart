@@ -222,7 +222,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   }
 
   void _handleMove(Direction direction) {
-    if ( direction == Direction.left && !isDrawerOpen) {
+    if ( drawerFocusNode.hasFocus && direction == Direction.left && !isDrawerOpen) {
 
       setState(() {
         isDrawerOpen = true;

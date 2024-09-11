@@ -91,7 +91,7 @@ class _TipsCarouselState extends State<TipsCarousel> {
                             32.verticalSpace,
                             Container(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 10.h, horizontal: 20.w),
+                                  vertical: 15.sp, horizontal: 32.w),
                               width: 266.w,
                               height: 60.h,
                               decoration: BoxDecoration(
@@ -102,10 +102,11 @@ class _TipsCarouselState extends State<TipsCarousel> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Icon(
-                                    Icons.play_arrow,
-                                    color: Colors.white,
+                                  SvgPicture.asset(
+                                    'assets/images/play.svg',
+                                    width: 24.w,
                                   ),
+                                  10.horizontalSpace,
                                   Text(
                                     'Tomosha qilish',
                                     style: CustomTextStyle.style500.copyWith(
@@ -170,7 +171,7 @@ class _TipsCarouselState extends State<TipsCarousel> {
                             32.verticalSpace,
                             Container(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 10.h, horizontal: 20.w),
+                                  vertical: 15.sp, horizontal: 32.w),
                               width: 266.w,
                               height: 60.h,
                               decoration: BoxDecoration(
@@ -181,10 +182,11 @@ class _TipsCarouselState extends State<TipsCarousel> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Icon(
-                                    Icons.play_arrow,
-                                    color: Colors.white,
+                                  SvgPicture.asset(
+                                    'assets/images/play.svg',
+                                    width: 24.w,
                                   ),
+                                  10.horizontalSpace,
                                   Text(
                                     'Tomosha qilish',
                                     style: CustomTextStyle.style500.copyWith(
@@ -249,7 +251,7 @@ class _TipsCarouselState extends State<TipsCarousel> {
                             32.verticalSpace,
                             Container(
                               padding: EdgeInsets.symmetric(
-                                  vertical: 10.h, horizontal: 20.w),
+                                  vertical: 15.sp, horizontal: 32.w),
                               width: 266.w,
                               height: 60.h,
                               decoration: BoxDecoration(
@@ -260,10 +262,11 @@ class _TipsCarouselState extends State<TipsCarousel> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  const Icon(
-                                    Icons.play_arrow,
-                                    color: Colors.white,
+                                  SvgPicture.asset(
+                                    'assets/images/play.svg',
+                                    width: 24.w,
                                   ),
+                                  10.horizontalSpace,
                                   Text(
                                     'Tomosha qilish',
                                     style: CustomTextStyle.style500.copyWith(

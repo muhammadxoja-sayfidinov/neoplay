@@ -222,7 +222,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   }
 
   void _handleMove(Direction direction) {
-    if ( drawerFocusNode.hasFocus && direction == Direction.left && !isDrawerOpen) {
+    if ( direction == Direction.left && !isDrawerOpen) {
 
       setState(() {
         isDrawerOpen = true;
@@ -244,7 +244,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         });
       } else if (direction == Direction.right) {
         toggleDrawer();
-        contentFocusNode.previousFocus();
+       contentFocusNode.previousFocus();
       }
     }
   }

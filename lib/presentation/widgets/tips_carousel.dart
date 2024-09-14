@@ -7,297 +7,309 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import '../../core/constants/colors.dart';
 
 class TipsCarousel extends StatefulWidget {
+
   final PageController pageController;
   final Function(int) onPageChanged;
-
+  final FocusNode tipsFocus;
   const TipsCarousel(
-      {super.key, required this.pageController, required this.onPageChanged});
+      {super.key, required this.pageController, required this.onPageChanged , required this.tipsFocus});
 
   @override
   _TipsCarouselState createState() => _TipsCarouselState();
 }
 
 class _TipsCarouselState extends State<TipsCarousel> {
+  Color _currentColor =Colors.grey;
   @override
   void initState() {
     super.initState();
+    widget.tipsFocus.addListener(_onFocusChange);
     widget.pageController.addListener(() {
       widget.onPageChanged(widget.pageController.page!.round());
     });
   }
-
+  void _onFocusChange() {
+    setState(() {
+      _currentColor = widget.tipsFocus.hasFocus ? Colors.red : Colors.grey;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Stack(
-          children: [
-            SizedBox(
-              width: 1640.w,
-              height: 700.h,
-              child: Expanded(
-                child: PageView(
+        Focus(
+          focusNode:widget.tipsFocus,
+          child: Stack(
+            children: [
+              SizedBox(
+                width: 1640.w,
+                height: 700.h,
+
+                child: Expanded(
+                  child: PageView(
+                    controller: widget.pageController,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 48.h, horizontal: 70.w),
+                          width: 1640.w,
+                          height: 798.h,
+                          decoration: BoxDecoration(
+                              border: Border.all(width: 1 , color: _currentColor),
+                            borderRadius: BorderRadius.circular(60.r),
+                            image: const DecorationImage(
+                              image: ExactAssetImage(
+                                  'assets/film_images/treler.png'),
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                children: [
+                                  _buildRatingBadge('assets/images/logo_imdb.svg',
+                                      7.2, yellow, 37.w, 22.h, 105.w, 40.h),
+                                  5.horizontalSpace,
+                                  _buildRatingBadge('assets/images/img.svg', 9.2,
+                                      errorColor, 40.w, 24.h, 94.w, 40.h),
+                                  5.horizontalSpace,
+                                  _buildRatingBadge(
+                                      'assets/images/logo_neoplay.svg',
+                                      8.8,
+                                      red,
+                                      72.w,
+                                      22.h,
+                                      128.w,
+                                      40.h),
+                                ],
+                              ),
+                              84.verticalSpace,
+                              Text(
+                                'Cчастье',
+                                style: CustomTextStyle.style600,
+                              ),
+                              32.verticalSpace,
+                              Text(
+                                'Shimoliy Koreya chegara qo‘shinlari polkovnigi\nCha Gi Sung armiyaga kontrabanda qurollarini\nyetkazib berish bilan shug‘ullangan, biroq \nkunlarning birida vaziyatdan...',
+                                style: CustomTextStyle.style500.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 28.sp,
+                                    height: 3.sp),
+                              ),
+                              32.verticalSpace,
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 15.sp, horizontal: 32.w),
+                                width: 266.w,
+                                height: 60.h,
+                                decoration: BoxDecoration(
+                                  color: red,
+                                  borderRadius: BorderRadius.circular(50.r),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/play.svg',
+                                      width: 24.w,
+                                    ),
+                                    10.horizontalSpace,
+                                    Text(
+                                      'Tomosha qilish',
+                                      style: CustomTextStyle.style500.copyWith(
+                                          color: Colors.white, fontSize: 20.sp),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 48.h, horizontal: 70.w),
+                          width: 1640.w,
+                          height: 798.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(60.r),
+                            image: const DecorationImage(
+                              image: ExactAssetImage(
+                                  'assets/film_images/treler.png'),
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                children: [
+                                  _buildRatingBadge('assets/images/logo_imdb.svg',
+                                      7.2, yellow, 37.w, 22.h, 105.w, 40.h),
+                                  5.horizontalSpace,
+                                  _buildRatingBadge('assets/images/img.svg', 9.2,
+                                      errorColor, 40.w, 24.h, 94.w, 40.h),
+                                  5.horizontalSpace,
+                                  _buildRatingBadge(
+                                      'assets/images/logo_neoplay.svg',
+                                      8.8,
+                                      red,
+                                      72.w,
+                                      22.h,
+                                      128.w,
+                                      40.h),
+                                ],
+                              ),
+                              84.verticalSpace,
+                              Text(
+                                'Cчастье',
+                                style: CustomTextStyle.style600,
+                              ),
+                              32.verticalSpace,
+                              Text(
+                                'Shimoliy Koreya chegara qo‘shinlari polkovnigi\nCha Gi Sung armiyaga kontrabanda qurollarini\nyetkazib berish bilan shug‘ullangan, biroq \nkunlarning birida vaziyatdan...',
+                                style: CustomTextStyle.style500.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 28.sp,
+                                    height: 3.sp),
+                              ),
+                              32.verticalSpace,
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 15.sp, horizontal: 32.w),
+                                width: 266.w,
+                                height: 60.h,
+                                decoration: BoxDecoration(
+                                  color: red,
+                                  borderRadius: BorderRadius.circular(50.r),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/play.svg',
+                                      width: 24.w,
+                                    ),
+                                    10.horizontalSpace,
+                                    Text(
+                                      'Tomosha qilish',
+                                      style: CustomTextStyle.style500.copyWith(
+                                          color: Colors.white, fontSize: 20.sp),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 48.h, horizontal: 70.w),
+                          width: 1640.w,
+                          height: 798.h,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(60.r),
+                            image: const DecorationImage(
+                              image: ExactAssetImage(
+                                  'assets/film_images/treler.png'),
+                              fit: BoxFit.fitHeight,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Wrap(
+                                children: [
+                                  _buildRatingBadge('assets/images/logo_imdb.svg',
+                                      7.2, yellow, 37.w, 22.h, 105.w, 40.h),
+                                  5.horizontalSpace,
+                                  _buildRatingBadge('assets/images/img.svg', 9.2,
+                                      errorColor, 40.w, 24.h, 94.w, 40.h),
+                                  5.horizontalSpace,
+                                  _buildRatingBadge(
+                                      'assets/images/logo_neoplay.svg',
+                                      8.8,
+                                      red,
+                                      72.w,
+                                      22.h,
+                                      128.w,
+                                      40.h),
+                                ],
+                              ),
+                              84.verticalSpace,
+                              Text(
+                                'Cчастье',
+                                style: CustomTextStyle.style600,
+                              ),
+                              32.verticalSpace,
+                              Text(
+                                'Shimoliy Koreya chegara qo‘shinlari polkovnigi\nCha Gi Sung armiyaga kontrabanda qurollarini\nyetkazib berish bilan shug‘ullangan, biroq \nkunlarning birida vaziyatdan...',
+                                style: CustomTextStyle.style500.copyWith(
+                                    color: Colors.white,
+                                    fontSize: 28.sp,
+                                    height: 3.sp),
+                              ),
+                              32.verticalSpace,
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    vertical: 15.sp, horizontal: 32.w),
+                                width: 266.w,
+                                height: 60.h,
+                                decoration: BoxDecoration(
+                                  color: red,
+                                  borderRadius: BorderRadius.circular(50.r),
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      'assets/images/play.svg',
+                                      width: 24.w,
+                                    ),
+                                    10.horizontalSpace,
+                                    Text(
+                                      'Tomosha qilish',
+                                      style: CustomTextStyle.style500.copyWith(
+                                          color: Colors.white, fontSize: 20.sp),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 70.w,
+                bottom: 60.h,
+                child: SmoothPageIndicator(
                   controller: widget.pageController,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 48.h, horizontal: 70.w),
-                        width: 1640.w,
-                        height: 798.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(60.r),
-                          image: const DecorationImage(
-                            image: ExactAssetImage(
-                                'assets/film_images/treler.png'),
-                            fit: BoxFit.fitHeight,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
-                              children: [
-                                _buildRatingBadge('assets/images/logo_imdb.svg',
-                                    7.2, yellow, 37.w, 22.h, 105.w, 40.h),
-                                5.horizontalSpace,
-                                _buildRatingBadge('assets/images/img.svg', 9.2,
-                                    errorColor, 40.w, 24.h, 94.w, 40.h),
-                                5.horizontalSpace,
-                                _buildRatingBadge(
-                                    'assets/images/logo_neoplay.svg',
-                                    8.8,
-                                    red,
-                                    72.w,
-                                    22.h,
-                                    128.w,
-                                    40.h),
-                              ],
-                            ),
-                            84.verticalSpace,
-                            Text(
-                              'Cчастье',
-                              style: CustomTextStyle.style600,
-                            ),
-                            32.verticalSpace,
-                            Text(
-                              'Shimoliy Koreya chegara qo‘shinlari polkovnigi\nCha Gi Sung armiyaga kontrabanda qurollarini\nyetkazib berish bilan shug‘ullangan, biroq \nkunlarning birida vaziyatdan...',
-                              style: CustomTextStyle.style500.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 28.sp,
-                                  height: 3.sp),
-                            ),
-                            32.verticalSpace,
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 15.sp, horizontal: 32.w),
-                              width: 266.w,
-                              height: 60.h,
-                              decoration: BoxDecoration(
-                                color: red,
-                                borderRadius: BorderRadius.circular(50.r),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images/play.svg',
-                                    width: 24.w,
-                                  ),
-                                  10.horizontalSpace,
-                                  Text(
-                                    'Tomosha qilish',
-                                    style: CustomTextStyle.style500.copyWith(
-                                        color: Colors.white, fontSize: 20.sp),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 48.h, horizontal: 70.w),
-                        width: 1640.w,
-                        height: 798.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(60.r),
-                          image: const DecorationImage(
-                            image: ExactAssetImage(
-                                'assets/film_images/treler.png'),
-                            fit: BoxFit.fitHeight,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
-                              children: [
-                                _buildRatingBadge('assets/images/logo_imdb.svg',
-                                    7.2, yellow, 37.w, 22.h, 105.w, 40.h),
-                                5.horizontalSpace,
-                                _buildRatingBadge('assets/images/img.svg', 9.2,
-                                    errorColor, 40.w, 24.h, 94.w, 40.h),
-                                5.horizontalSpace,
-                                _buildRatingBadge(
-                                    'assets/images/logo_neoplay.svg',
-                                    8.8,
-                                    red,
-                                    72.w,
-                                    22.h,
-                                    128.w,
-                                    40.h),
-                              ],
-                            ),
-                            84.verticalSpace,
-                            Text(
-                              'Cчастье',
-                              style: CustomTextStyle.style600,
-                            ),
-                            32.verticalSpace,
-                            Text(
-                              'Shimoliy Koreya chegara qo‘shinlari polkovnigi\nCha Gi Sung armiyaga kontrabanda qurollarini\nyetkazib berish bilan shug‘ullangan, biroq \nkunlarning birida vaziyatdan...',
-                              style: CustomTextStyle.style500.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 28.sp,
-                                  height: 3.sp),
-                            ),
-                            32.verticalSpace,
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 15.sp, horizontal: 32.w),
-                              width: 266.w,
-                              height: 60.h,
-                              decoration: BoxDecoration(
-                                color: red,
-                                borderRadius: BorderRadius.circular(50.r),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images/play.svg',
-                                    width: 24.w,
-                                  ),
-                                  10.horizontalSpace,
-                                  Text(
-                                    'Tomosha qilish',
-                                    style: CustomTextStyle.style500.copyWith(
-                                        color: Colors.white, fontSize: 20.sp),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 48.h, horizontal: 70.w),
-                        width: 1640.w,
-                        height: 798.h,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(60.r),
-                          image: const DecorationImage(
-                            image: ExactAssetImage(
-                                'assets/film_images/treler.png'),
-                            fit: BoxFit.fitHeight,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Wrap(
-                              children: [
-                                _buildRatingBadge('assets/images/logo_imdb.svg',
-                                    7.2, yellow, 37.w, 22.h, 105.w, 40.h),
-                                5.horizontalSpace,
-                                _buildRatingBadge('assets/images/img.svg', 9.2,
-                                    errorColor, 40.w, 24.h, 94.w, 40.h),
-                                5.horizontalSpace,
-                                _buildRatingBadge(
-                                    'assets/images/logo_neoplay.svg',
-                                    8.8,
-                                    red,
-                                    72.w,
-                                    22.h,
-                                    128.w,
-                                    40.h),
-                              ],
-                            ),
-                            84.verticalSpace,
-                            Text(
-                              'Cчастье',
-                              style: CustomTextStyle.style600,
-                            ),
-                            32.verticalSpace,
-                            Text(
-                              'Shimoliy Koreya chegara qo‘shinlari polkovnigi\nCha Gi Sung armiyaga kontrabanda qurollarini\nyetkazib berish bilan shug‘ullangan, biroq \nkunlarning birida vaziyatdan...',
-                              style: CustomTextStyle.style500.copyWith(
-                                  color: Colors.white,
-                                  fontSize: 28.sp,
-                                  height: 3.sp),
-                            ),
-                            32.verticalSpace,
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 15.sp, horizontal: 32.w),
-                              width: 266.w,
-                              height: 60.h,
-                              decoration: BoxDecoration(
-                                color: red,
-                                borderRadius: BorderRadius.circular(50.r),
-                              ),
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  SvgPicture.asset(
-                                    'assets/images/play.svg',
-                                    width: 24.w,
-                                  ),
-                                  10.horizontalSpace,
-                                  Text(
-                                    'Tomosha qilish',
-                                    style: CustomTextStyle.style500.copyWith(
-                                        color: Colors.white, fontSize: 20.sp),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                  count: 3,
+                  effect: WormEffect(
+                    dotWidth: 10,
+                    dotHeight: 10,
+                    activeDotColor: Colors.white,
+                    dotColor: Colors.grey,
+                  ),
                 ),
               ),
-            ),
-            Positioned(
-              left: 70.w,
-              bottom: 60.h,
-              child: SmoothPageIndicator(
-                controller: widget.pageController,
-                count: 3,
-                effect: WormEffect(
-                  dotWidth: 10,
-                  dotHeight: 10,
-                  activeDotColor: Colors.white,
-                  dotColor: Colors.grey,
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ],
     );

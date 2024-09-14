@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neoplay/core/constants/colors.dart';
 import 'package:neoplay/core/constants/style.dart';
 import 'package:neoplay/data/models/models.dart';
+import 'package:neoplay/presentation/screens/main_pages/main_navigation_page.dart';
 
 import '../../widgets/vertical_movie_card.dart';
 
@@ -22,8 +23,8 @@ class _SearchScreenState extends State<SearchScreen> {
   int _focusedIndex = 0;
 
   final ScrollController _scrollController = ScrollController();
-  final List<FocusNode> _focusNodes =
-      List<FocusNode>.generate(movies.length, (_) => FocusNode());
+  final List<FocusNode> _focusNodes =  List<FocusNode>.generate(movies.length, (_) => FocusNode());
+
   bool haveSearch = false;
 
   // Sample List of movies for the grid view
@@ -69,12 +70,25 @@ class _SearchScreenState extends State<SearchScreen> {
           setState(() {
             _focusNodes[_focusedIndex].requestFocus();
           });
+        }else if(_focusNodes[_focusedIndex].hasFocus &&
+            _focusedIndex < movies.length - 6){
+          _moveFocus(6);
         }
-      } else if (key == LogicalKeyboardKey.arrowLeft) {
+      }else if(key == LogicalKeyboardKey.arrowUp) {
+          if(_focusNodes[_focusedIndex].hasFocus && _focusedIndex > 5){
+            _moveFocus(-6);
+          }else if(_focusNodes[_focusedIndex].hasFocus && _focusedIndex < 6){
+              searchFieldFocusNode.requestFocus();
+          }
+      }else if (key == LogicalKeyboardKey.arrowLeft) {
+        if(searchFieldFocusNode.hasFocus){
+
+
+        }
         if (_focusNodes[_focusedIndex].hasFocus && _focusedIndex > 0) {
           _moveFocus(-1);
         } else {
-          FocusScope.of(context).previousFocus();
+          _focusMoviScop.previousFocus();
         }
       } else if (key == LogicalKeyboardKey.select ||
           key == LogicalKeyboardKey.enter) {

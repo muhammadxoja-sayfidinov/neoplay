@@ -2,6 +2,8 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:neoplay/core/constants/style.dart';
 import 'package:neoplay/presentation/screens/main_pages/main_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/profile_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/saved_screen.dart';
@@ -11,11 +13,7 @@ import 'package:neoplay/presentation/screens/main_pages/setting_screen.dart';
 import 'catalog_sceen.dart';
 import 'notification_screen.dart';
 
-
-
 class MainNavigationPage extends StatefulWidget {
-
-
   const MainNavigationPage({super.key});
 
   @override
@@ -23,13 +21,15 @@ class MainNavigationPage extends StatefulWidget {
 }
 
 class _MainNavigationPageState extends State<MainNavigationPage> {
- static bool isDrawerOpen = false;
+  static bool isDrawerOpen = false;
   int selectedPage = 1;
   int _focusedDrawerItem = 0;
+  int _focusedCategoryItem = 0;
 
- static final FocusNode drawerFocusNode = FocusNode();
-
+  static final FocusNode drawerFocusNode = FocusNode();
   final FocusNode contentFocusNode = FocusNode();
+  final FocusNode filterFocusNode = FocusNode();
+
 
   void toggleDrawer() {
     setState(() {
@@ -49,6 +49,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     });
     contentFocusNode.requestFocus();
   }
+
   bool openText = false;
 
   @override
@@ -123,18 +124,15 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                   top: 0,
                   bottom: 0,
                   child: AnimatedContainer(
-                    onEnd: (){
+                    onEnd: () {
                       setState(() {
                         const Duration(milliseconds: 500);
                         openText = isDrawerOpen;
                       });
                     },
                     duration: const Duration(milliseconds: 300),
-                    width: isDrawerOpen ? 240.w : 90.w,
                     height: 1080.h,
-                    padding: EdgeInsets.symmetric(
-                        vertical: 80.h,
-                        horizontal: isDrawerOpen ? 17.w : 12.w),
+                    padding: EdgeInsets.symmetric(vertical: 80.h, horizontal: isDrawerOpen ? 17.w : 12.w),
                     decoration: BoxDecoration(
                       color: const Color(0xFF1C1C1E),
                       borderRadius: BorderRadius.only(
@@ -146,10 +144,11 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                       focusNode: drawerFocusNode,
                       child: GestureDetector(
                         onTap: toggleDrawer,
-                        child: Column(
+                        child: Row(
                           children: [
                             // Gap between items
-                            Expanded(
+                            SizedBox(
+                              width: isDrawerOpen ? 240.w : 90.w,
                               child: ListView.builder(
                                 padding: EdgeInsets.zero,
                                 itemCount: 7,
@@ -165,6 +164,47 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                                 },
                               ),
                             ),
+                            // Category section for "Catalog"
+                            _focusedDrawerItem == 2 && !contentFocusNode.hasFocus
+                                ? Row(
+                                  children: [
+                                    41.horizontalSpace,
+                                    SizedBox(
+                                      width:300.w ,
+                                      child: Focus(
+                                        focusNode: filterFocusNode,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              "Kategoriyalar",
+                                              style: CustomTextStyle.style500.copyWith(fontSize: 28.sp, color: Colors.white),
+                                            ),
+                                            32.verticalSpace,
+                                            Expanded(
+                                              child: ListView.builder(
+
+                                                itemCount: 5,
+                                                itemBuilder: (context, index) {
+                                                  return _buildCategoryItem(
+                                                    text: _getCategoryText(index),
+                                                    isFocused: _focusedCategoryItem == index,
+                                                    onTap: () {
+                                                      setState(() {
+                                                        _focusedCategoryItem = index;
+                                                      });
+                                                    },
+                                                  );
+                                                },
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                                : Container(),
                           ],
                         ),
                       ),
@@ -221,42 +261,24 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     }
   }
 
-  void _handleMove(Direction direction) {
-    if ( direction == Direction.left && !isDrawerOpen) {
+  String _getCategoryText(int index) {
+    // Add category names here
+    switch (index) {
+      case 0:
+        return 'Barchasi';
+      case 1:
+        return 'Filmlar';
+      case 2:
+        return 'Seriallar';
+      case 3:
+        return 'Multfilmlar';
+      case 4:
+        return 'Animelar';
 
-      setState(() {
-        isDrawerOpen = true;
-        _focusedDrawerItem = selectedPage;
-      });
-      drawerFocusNode.requestFocus();
-    } else if (isDrawerOpen) {
-      if (direction == Direction.up) {
-        setState(() {
-          _focusedDrawerItem = (_focusedDrawerItem > 0)
-              ? _focusedDrawerItem - 1
-              : _focusedDrawerItem;
-        });
-      } else if (direction == Direction.down) {
-        setState(() {
-          _focusedDrawerItem = (_focusedDrawerItem < 6)
-              ? _focusedDrawerItem + 1
-              : _focusedDrawerItem;
-        });
-      } else if (direction == Direction.right) {
-        toggleDrawer();
-       contentFocusNode.previousFocus();
-      }
+      default:
+        return 'Barchasi';
     }
   }
-
-  void _handleActivate() {
-    if (isDrawerOpen) {
-      _selectPage(_focusedDrawerItem);
-    } else {
-      // Handle activation of the main content, if necessary
-    }
-  }
-
   Widget _buildDrawerItem({
     required IconData icon,
     required String text,
@@ -265,7 +287,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     required bool isFocused,
     required Function() onTap,
   }) {
-
     return InkWell(
       onTap: onTap,
       child: Container(
@@ -286,25 +307,125 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           ),
         ),
         child: Row(
-          mainAxisAlignment:
-          isOpen ? MainAxisAlignment.start : MainAxisAlignment.center,
+          mainAxisAlignment: isOpen ? MainAxisAlignment.start : MainAxisAlignment.center,
           children: [
             Icon(icon, color: Colors.white, size: 30.sp),
             if (openText && isOpen) ...[
               Flexible(
                 child: Wrap(
-                    children:[
-                      SizedBox(width: 17.w),
-                  Text(text, style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.sp,
-                  ),maxLines: 1,overflow: TextOverflow.ellipsis,),],),
+                  children: [
+                    SizedBox(width: 17.w),
+                    Text(
+                      text,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.sp,
+                      ),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
-            ],
+            ]
           ],
         ),
       ),
     );
+  }
+  Widget _buildCategoryItem({
+    required String text,
+    required bool isFocused,
+    required Function() onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 32.w),
+        height: 60.h,
+        decoration: BoxDecoration(
+          color: isFocused && filterFocusNode.hasFocus  ? Colors.red.shade600 : Colors.transparent,
+          borderRadius: BorderRadius.circular(50.r),
+        ),
+        child:  Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+          Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.sp,
+          ),),
+            isFocused   ?SvgPicture.asset("assets/images/check.svg"
+                ,width: 24.w,
+            ):SizedBox(
+
+            ),
+          ],
+
+
+        ),
+      ),
+    );
+  }
+
+  void _handleMove(Direction direction) {
+      if (direction == Direction.left  ) {
+      if(!isDrawerOpen) {
+        setState(() {
+          isDrawerOpen = true;
+          _focusedDrawerItem = selectedPage;
+        });
+      }
+      if(filterFocusNode.hasFocus){
+        setState(() {
+          drawerFocusNode.requestFocus();
+        });
+      }
+      drawerFocusNode.requestFocus();
+    } else
+      if (isDrawerOpen) {
+      if (direction == Direction.up) {
+        setState(() {
+          if(filterFocusNode.hasFocus && _focusedCategoryItem > 0){
+            _focusedCategoryItem=_focusedCategoryItem-1;
+
+          }else{
+          _focusedDrawerItem = (_focusedDrawerItem > 0) ? _focusedDrawerItem - 1 : _focusedDrawerItem;}
+        });
+      } else
+      if (direction == Direction.down) {
+        setState(() {
+          if(filterFocusNode.hasFocus && _focusedCategoryItem < 4){
+            _focusedCategoryItem=_focusedCategoryItem+1;
+          }else{
+            _focusedDrawerItem = (_focusedDrawerItem < 6) ? _focusedDrawerItem + 1 : _focusedDrawerItem;
+
+          }
+        });
+      } else
+      if (direction == Direction.right) {
+        if(_focusedDrawerItem ==2){
+            setState(() {
+              filterFocusNode.requestFocus();
+            });
+        }else{
+          toggleDrawer();
+          contentFocusNode.requestFocus();
+        }
+
+
+      }
+    }
+  }
+
+  void _handleActivate() {
+    if (isDrawerOpen) {
+      _selectPage(_focusedDrawerItem);
+    } else {
+      // Handle activation of the main content, if necessary
+    }
   }
 }
 

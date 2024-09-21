@@ -82,13 +82,12 @@ class _SearchScreenState extends State<SearchScreen> {
           }
       }else if (key == LogicalKeyboardKey.arrowLeft) {
         if(searchFieldFocusNode.hasFocus){
+            FocusScope.of(context).previousFocus();
 
-
-        }
-        if (_focusNodes[_focusedIndex].hasFocus && _focusedIndex > 0) {
+        }else if (_focusNodes[_focusedIndex].hasFocus && _focusedIndex > 0) {
           _moveFocus(-1);
         } else {
-          _focusMoviScop.previousFocus();
+          FocusScope.of(context).previousFocus();
         }
       } else if (key == LogicalKeyboardKey.select ||
           key == LogicalKeyboardKey.enter) {

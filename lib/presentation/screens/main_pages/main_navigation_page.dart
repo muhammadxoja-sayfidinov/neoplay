@@ -63,7 +63,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         body = MainScreen();
         break;
       case 2:
-        body = const CatalogSceen();
+        body = const CatalogScreen();
         break;
       case 3:
         body = const SavedScreen();
@@ -110,7 +110,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.only(left: 162.w, right: 85.w),
+                            padding: EdgeInsets.only(left: 162.w, ),
                             child: body,
                           ),
                         ),

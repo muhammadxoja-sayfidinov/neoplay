@@ -18,12 +18,14 @@ class ManageProfiles extends StatefulWidget {
 
 class _ManageProfilesState extends State<ManageProfiles> {
   int _selectedIndex = -1;
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     saveButtonFocusNode.requestFocus();
   }
+
   // FocusNode larni e'lon qilish
   final FocusNode profile1FocusNode = FocusNode();
   final FocusNode profile2FocusNode = FocusNode();
@@ -43,12 +45,15 @@ class _ManageProfilesState extends State<ManageProfiles> {
     var size = MediaQuery.of(context).size;
     return Shortcuts(
       shortcuts: <LogicalKeySet, Intent>{
-        LogicalKeySet(LogicalKeyboardKey.arrowDown): const _ToggleIntent(Direction.down),
-        LogicalKeySet(LogicalKeyboardKey.arrowUp): const _ToggleIntent(Direction.up),
-        LogicalKeySet(LogicalKeyboardKey.arrowLeft): const _ToggleIntent(Direction.left),
-        LogicalKeySet(LogicalKeyboardKey.arrowRight): const _ToggleIntent(Direction.right),
+        LogicalKeySet(LogicalKeyboardKey.arrowDown):
+            const _ToggleIntent(Direction.down),
+        LogicalKeySet(LogicalKeyboardKey.arrowUp):
+            const _ToggleIntent(Direction.up),
+        LogicalKeySet(LogicalKeyboardKey.arrowLeft):
+            const _ToggleIntent(Direction.left),
+        LogicalKeySet(LogicalKeyboardKey.arrowRight):
+            const _ToggleIntent(Direction.right),
         LogicalKeySet(LogicalKeyboardKey.select): const _ActivateIntent(),
-
       },
       child: Actions(
         actions: <Type, Action<Intent>>{
@@ -88,30 +93,36 @@ class _ManageProfilesState extends State<ManageProfiles> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _buildProfileCard(0, '+998 93 908...', 'asosiy profil', 'assets/images/man_logo.png', (){
+                    _buildProfileCard(0, '+998 93 908...', 'asosiy profil',
+                        'assets/images/man_logo.png', () {
                       var push = Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ProfileEditing()),
+                        MaterialPageRoute(
+                            builder: (context) => const ProfileEditing()),
                       );
                     }, profile1FocusNode),
                     SizedBox(width: 40.w),
-                    _buildProfileCard(1, 'Bolalar profili', 'bolalar uchun', 'assets/images/children_logo.png',(){
+                    _buildProfileCard(1, 'Bolalar profili', 'bolalar uchun',
+                        'assets/images/children_logo.png', () {
                       var push = Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => ChildrenProfileEditing()),
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const ChildrenProfileEditing()),
                       );
                     }, profile2FocusNode),
                   ],
                 ),
                 SizedBox(height: 50.h),
                 CustomButton(
-                  color:lightGrey,
+                  color: lightGrey,
                   width: 708.sp,
                   name: "Saqlash",
                   onPressed: () {
-                     Navigator.push(
+                    Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SuccessfullyRegistered()),
+                      MaterialPageRoute(
+                          builder: (context) => const SuccessfullyRegistered()),
                     );
                   },
                   focusNode: saveButtonFocusNode, // Fokusni qo'shish
@@ -124,7 +135,8 @@ class _ManageProfilesState extends State<ManageProfiles> {
     );
   }
 
-  Widget _buildProfileCard(int index, String title, String subtitle, String imagePath, VoidCallback onTap, FocusNode focusNode) {
+  Widget _buildProfileCard(int index, String title, String subtitle,
+      String imagePath, VoidCallback onTap, FocusNode focusNode) {
     bool isSelected = _selectedIndex == index;
 
     return GestureDetector(
@@ -170,62 +182,68 @@ class _ManageProfilesState extends State<ManageProfiles> {
                   ),
                 ],
               ),
-              focusNode.hasFocus?Positioned(
-                top: 30.h,
-                right: 30.w,
-                child: TextButton(
-                  child: SvgPicture.asset(
-                    'assets/images/edit_logo.svg',
-                  ),
-                  onPressed: onTap,
-                ),
-              ):SizedBox(),
+              focusNode.hasFocus
+                  ? Positioned(
+                      top: 30.h,
+                      right: 30.w,
+                      child: TextButton(
+                        child: SvgPicture.asset(
+                          'assets/images/edit_logo.svg',
+                        ),
+                        onPressed: onTap,
+                      ),
+                    )
+                  : const SizedBox(),
             ],
           ),
         ),
       ),
     );
   }
+
   void _handleToggle(Direction direction) {
     if (direction == Direction.down) {
-      if(profile1FocusNode.hasFocus || profile2FocusNode.hasFocus){
+      if (profile1FocusNode.hasFocus || profile2FocusNode.hasFocus) {
         setState(() {
           saveButtonFocusNode.requestFocus();
         });
       }
     } else if (direction == Direction.up) {
-      if(saveButtonFocusNode.hasFocus){
+      if (saveButtonFocusNode.hasFocus) {
         setState(() {
           profile1FocusNode.requestFocus();
         });
       }
-    }else if(direction == Direction.left){
-      if(profile2FocusNode.hasFocus){
+    } else if (direction == Direction.left) {
+      if (profile2FocusNode.hasFocus) {
         setState(() {
           profile1FocusNode.requestFocus();
         });
       }
-    }else if(direction == Direction.right){
-      if(profile1FocusNode.hasFocus){
+    } else if (direction == Direction.right) {
+      if (profile1FocusNode.hasFocus) {
         setState(() {
           profile2FocusNode.requestFocus();
         });
       }
     }
   }
-  void _toggleActivate(){
-  if(saveButtonFocusNode.hasFocus){
-  Navigator.push(
-  context,
-  MaterialPageRoute(builder: (context) => SuccessfullyRegistered()),
-  );
-  }}
 
+  void _toggleActivate() {
+    if (saveButtonFocusNode.hasFocus) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const SuccessfullyRegistered()),
+      );
+    }
+  }
 }
-enum Direction { up, down,left ,right }
+
+enum Direction { up, down, left, right }
 
 class _ToggleIntent extends Intent {
   const _ToggleIntent(this.direction);
+
   final Direction direction;
 }
 

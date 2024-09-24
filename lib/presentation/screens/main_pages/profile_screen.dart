@@ -22,6 +22,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final List<FocusNode> _focusNodes =
       List<FocusNode>.generate(6, (_) => FocusNode());
 
+  final List<String> category = [
+    'Film haqida',
+    'Ijodkorlar',
+    'Fikrlar va baholar',
+    'O’xshash filmlar'
+  ];
+  final List<String> actorList = [
+    'assets/film_images/actor1.png',
+    'assets/film_images/actor2.png',
+    'assets/film_images/actor3.png',
+    'assets/film_images/actor4.png',
+    'assets/film_images/actor5.png',
+    'assets/film_images/actor5.png',
+    'assets/film_images/actor5.png',
+    'assets/film_images/actor5.png',
+    'assets/film_images/actor5.png',
+    'assets/film_images/actor5.png',
+    'assets/film_images/actor5.png',
+    'assets/film_images/actor5.png',
+    'assets/film_images/actor5.png',
+    'assets/film_images/actor5.png',
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -52,10 +75,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.dispose();
   }
 
+  int currentIndex = 2;
+
   @override
   Widget build(BuildContext context) {
     final pageController = PageController();
-    int currentPage = 0;
     return Shortcuts(
       shortcuts: <LogicalKeySet, Intent>{
         LogicalKeySet(LogicalKeyboardKey.arrowRight): const NextFocusIntent(),
@@ -203,267 +227,333 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       color: GilosNeutral800,
                       borderRadius: BorderRadius.circular(16.r)),
                   child: ListView.builder(
-                      itemCount: 4,
+                      itemCount: category.length,
                       scrollDirection: Axis.horizontal,
                       itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                            width: 432.w,
-                            height: 60.sp,
-                            decoration: BoxDecoration(
-                                color: index == 0 ? red : Colors.transparent,
-                                borderRadius: BorderRadius.circular(50.r)),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 10.sp, horizontal: 140.w),
-                            child: const Center(child: Text('Film haqida')));
+                        return InkWell(
+                          splashColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () {
+                            setState(() {
+                              currentIndex = index;
+                            });
+                          },
+                          child: Container(
+                              width: 432.w,
+                              height: 60.sp,
+                              decoration: BoxDecoration(
+                                  color: index == currentIndex
+                                      ? red
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(50.r)),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 10.sp, horizontal: 140.w),
+                              child: Center(child: Text(category[index]))),
+                        );
                       }),
                 ),
                 70.verticalSpace,
-                Container(
-                  padding: EdgeInsets.all(48.sp),
-                  width: 1700.sp,
-                  height: 772.w,
-                  decoration: BoxDecoration(
-                    color: GilosNeutral800,
-                    borderRadius: BorderRadius.circular(60.r),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Film haqida',
-                        style: CustomTextStyle.style600.copyWith(
-                          fontSize: 38.sp,
+                currentIndex == 0
+                    ? Container(
+                        padding: EdgeInsets.all(48.sp),
+                        width: 1700.sp,
+                        height: 772.w,
+                        decoration: BoxDecoration(
+                          color: GilosNeutral800,
+                          borderRadius: BorderRadius.circular(60.r),
                         ),
-                      ),
-                      32.verticalSpace,
-                      SizedBox(
-                        width: 1640.w,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Image.asset(
-                              'assets/film_images/film4.png',
-                              width: 386.w,
-                            ),
-                            32.horizontalSpace,
-                            SizedBox(
-                              width: 1100.w,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    'Koperatsiya: Maxfiy hamkorlik filmi',
-                                    style: CustomTextStyle.style500
-                                        .copyWith(color: Colors.white),
-                                  ),
-                                  24.verticalSpace,
-                                  Text(
-                                    '''Shimoliy Koreya chegara qo‘shinlari polkovnigi Cha Gi Sung armiyaga kontrabanda qurollarini yetkazib berish bilan shug‘ullangan, biroq kunlarning birida vaziyatdan unumli foydalanishga qaror qilgan va chegaradan ham narkotik moddalarni olib o‘ta boshlagan. U bu bilan qo'lga olindi, lavozimi tushirildi, barcha regaliyalardan mahrum bo'ldi...''',
-                                    style: CustomTextStyle.style400,
-                                  ),
-                                  48.verticalSpace,
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Davlati:',
-                                            style: CustomTextStyle.style400
-                                                .copyWith(),
-                                          ),
-                                          16.verticalSpace,
-                                          Text(
-                                            'Janubiy Koreya',
-                                            style: CustomTextStyle.style400
-                                                .copyWith(
-                                              backgroundColor: Colors.grey[800],
-                                            ),
-                                          ),
-                                          8.verticalSpace,
-                                          Text(
-                                            'Janubiy Koreya',
-                                            style: CustomTextStyle.style400
-                                                .copyWith(
-                                              backgroundColor: Colors.grey[800],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      48.horizontalSpace,
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Ishlab chiqilgan yili:',
-                                            style: CustomTextStyle.style400
-                                                .copyWith(),
-                                          ),
-                                          16.verticalSpace,
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '2018',
-                                                style: CustomTextStyle.style400
-                                                    .copyWith(
-                                                  backgroundColor:
-                                                      Colors.grey[800],
-                                                ),
-                                              ),
-                                              8.horizontalSpace,
-                                              Text(
-                                                '2019',
-                                                style: CustomTextStyle.style400
-                                                    .copyWith(
-                                                  backgroundColor:
-                                                      Colors.grey[800],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      48.horizontalSpace,
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Davomiyligi:',
-                                            style: CustomTextStyle.style400
-                                                .copyWith(),
-                                          ),
-                                          16.verticalSpace,
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '180 daqiqa',
-                                                style: CustomTextStyle.style400
-                                                    .copyWith(
-                                                  backgroundColor:
-                                                      Colors.grey[800],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      48.horizontalSpace,
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Film janri:',
-                                            style: CustomTextStyle.style400
-                                                .copyWith(),
-                                          ),
-                                          16.verticalSpace,
-                                          Row(
-                                            children: [
-                                              Text(
-                                                'Detektiv',
-                                                style: CustomTextStyle.style400
-                                                    .copyWith(
-                                                  backgroundColor:
-                                                      Colors.grey[800],
-                                                ),
-                                              ),
-                                              8.horizontalSpace,
-                                              Text(
-                                                'Jangari',
-                                                style: CustomTextStyle.style400
-                                                    .copyWith(
-                                                  backgroundColor:
-                                                      Colors.grey[800],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                      48.horizontalSpace,
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            'Yosh chegarasi:',
-                                            style: CustomTextStyle.style400
-                                                .copyWith(),
-                                          ),
-                                          16.verticalSpace,
-                                          Row(
-                                            children: [
-                                              Text(
-                                                '18+',
-                                                style: CustomTextStyle.style400
-                                                    .copyWith(
-                                                  backgroundColor:
-                                                      Colors.grey[800],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  48.verticalSpace,
-                                  Text(
-                                    'Platformalarda quyidagicha baholangan:',
-                                    style: CustomTextStyle.style400,
-                                  ),
-                                  16.verticalSpace,
-                                  Row(
-                                    children: [
-                                      Wrap(
-                                        children: [
-                                          _ratingWidget(
-                                              'assets/images/logo_imdb.svg',
-                                              7.2,
-                                              yellow,
-                                              37.w,
-                                              22.h,
-                                              105.w,
-                                              40.h),
-                                          5.horizontalSpace,
-                                          _ratingWidget(
-                                              'assets/images/kino poisk icon.svg',
-                                              9.2,
-                                              errorColor,
-                                              40.w,
-                                              24.h,
-                                              94.w,
-                                              40.h),
-                                          5.horizontalSpace,
-                                          _ratingWidget(
-                                              'assets/images/logo_neoplay.svg',
-                                              8.8,
-                                              red,
-                                              72.w,
-                                              22.h,
-                                              128.w,
-                                              40.h),
-                                        ],
-                                      ),
-                                    ],
-                                  )
-                                ],
+                            Text(
+                              'Film haqida',
+                              style: CustomTextStyle.style600.copyWith(
+                                fontSize: 38.sp,
                               ),
                             ),
+                            32.verticalSpace,
+                            SizedBox(
+                              width: 1640.w,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Image.asset(
+                                    'assets/film_images/film4.png',
+                                    width: 386.w,
+                                  ),
+                                  32.horizontalSpace,
+                                  SizedBox(
+                                    width: 1100.w,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Koperatsiya: Maxfiy hamkorlik filmi',
+                                          style: CustomTextStyle.style500
+                                              .copyWith(color: Colors.white),
+                                        ),
+                                        24.verticalSpace,
+                                        Text(
+                                          '''Shimoliy Koreya chegara qo‘shinlari polkovnigi Cha Gi Sung armiyaga kontrabanda qurollarini yetkazib berish bilan shug‘ullangan, biroq kunlarning birida vaziyatdan unumli foydalanishga qaror qilgan va chegaradan ham narkotik moddalarni olib o‘ta boshlagan. U bu bilan qo'lga olindi, lavozimi tushirildi, barcha regaliyalardan mahrum bo'ldi...''',
+                                          style: CustomTextStyle.style400,
+                                        ),
+                                        48.verticalSpace,
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Davlati:',
+                                                  style: CustomTextStyle
+                                                      .style400
+                                                      .copyWith(),
+                                                ),
+                                                16.verticalSpace,
+                                                Text(
+                                                  'Janubiy Koreya',
+                                                  style: CustomTextStyle
+                                                      .style400
+                                                      .copyWith(
+                                                    backgroundColor:
+                                                        Colors.grey[800],
+                                                  ),
+                                                ),
+                                                8.verticalSpace,
+                                                Text(
+                                                  'Janubiy Koreya',
+                                                  style: CustomTextStyle
+                                                      .style400
+                                                      .copyWith(
+                                                    backgroundColor:
+                                                        Colors.grey[800],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            48.horizontalSpace,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Ishlab chiqilgan yili:',
+                                                  style: CustomTextStyle
+                                                      .style400
+                                                      .copyWith(),
+                                                ),
+                                                16.verticalSpace,
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      '2018',
+                                                      style: CustomTextStyle
+                                                          .style400
+                                                          .copyWith(
+                                                        backgroundColor:
+                                                            Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                    8.horizontalSpace,
+                                                    Text(
+                                                      '2019',
+                                                      style: CustomTextStyle
+                                                          .style400
+                                                          .copyWith(
+                                                        backgroundColor:
+                                                            Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            48.horizontalSpace,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Davomiyligi:',
+                                                  style: CustomTextStyle
+                                                      .style400
+                                                      .copyWith(),
+                                                ),
+                                                16.verticalSpace,
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      '180 daqiqa',
+                                                      style: CustomTextStyle
+                                                          .style400
+                                                          .copyWith(
+                                                        backgroundColor:
+                                                            Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            48.horizontalSpace,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Film janri:',
+                                                  style: CustomTextStyle
+                                                      .style400
+                                                      .copyWith(),
+                                                ),
+                                                16.verticalSpace,
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      'Detektiv',
+                                                      style: CustomTextStyle
+                                                          .style400
+                                                          .copyWith(
+                                                        backgroundColor:
+                                                            Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                    8.horizontalSpace,
+                                                    Text(
+                                                      'Jangari',
+                                                      style: CustomTextStyle
+                                                          .style400
+                                                          .copyWith(
+                                                        backgroundColor:
+                                                            Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            48.horizontalSpace,
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Yosh chegarasi:',
+                                                  style: CustomTextStyle
+                                                      .style400
+                                                      .copyWith(),
+                                                ),
+                                                16.verticalSpace,
+                                                Row(
+                                                  children: [
+                                                    Text(
+                                                      '18+',
+                                                      style: CustomTextStyle
+                                                          .style400
+                                                          .copyWith(
+                                                        backgroundColor:
+                                                            Colors.grey[800],
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                        48.verticalSpace,
+                                        Text(
+                                          'Platformalarda quyidagicha baholangan:',
+                                          style: CustomTextStyle.style400,
+                                        ),
+                                        16.verticalSpace,
+                                        Row(
+                                          children: [
+                                            Wrap(
+                                              children: [
+                                                _ratingWidget(
+                                                    'assets/images/logo_imdb.svg',
+                                                    7.2,
+                                                    yellow,
+                                                    37.w,
+                                                    22.h,
+                                                    105.w,
+                                                    40.h),
+                                                5.horizontalSpace,
+                                                _ratingWidget(
+                                                    'assets/images/kino poisk icon.svg',
+                                                    9.2,
+                                                    errorColor,
+                                                    40.w,
+                                                    24.h,
+                                                    94.w,
+                                                    40.h),
+                                                5.horizontalSpace,
+                                                _ratingWidget(
+                                                    'assets/images/logo_neoplay.svg',
+                                                    8.8,
+                                                    red,
+                                                    72.w,
+                                                    22.h,
+                                                    128.w,
+                                                    40.h),
+                                              ],
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
                           ],
                         ),
                       )
-                    ],
-                  ),
-                )
+                    : Container(
+                        padding: EdgeInsets.all(48.sp),
+                        width: 1700.sp,
+                        height: 772.w,
+                        decoration: BoxDecoration(
+                          color: GilosNeutral800,
+                          borderRadius: BorderRadius.circular(60.r),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Aktyorlar',
+                              style: CustomTextStyle.style600.copyWith(
+                                fontSize: 38.sp,
+                              ),
+                            ),
+                            32.verticalSpace,
+                            Expanded(
+                              child: ListView.builder(
+                                  itemCount: actorList.length,
+                                  scrollDirection: Axis.horizontal,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(left: 8.w),
+                                      child: ClipOval(
+                                        child: Image.asset(
+                                          width: 146.w,
+                                          actorList[index],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            ),
+                          ],
+                        ))
               ],
             ),
           ),

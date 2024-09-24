@@ -35,9 +35,9 @@ class _GetChildrenAgeState extends State<GetChildrenAge> {
       body: Container(
         width: size.width,
         height: size.height,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage("assets/images/kids-update-bg.png"),
+            image: const AssetImage("assets/images/kids-update-bg.png"),
             fit: BoxFit.cover,
           ),
         ),
@@ -48,7 +48,7 @@ class _GetChildrenAgeState extends State<GetChildrenAge> {
               width: 500.w,
               padding: EdgeInsets.all(48.w),
               decoration: BoxDecoration(
-                color: Color.fromRGBO(13, 14, 16, 1),
+                color: const Color.fromRGBO(13, 14, 16, 1),
                 borderRadius: BorderRadius.circular(20.r),
               ),
               child: Column(
@@ -83,7 +83,9 @@ class _GetChildrenAgeState extends State<GetChildrenAge> {
                             decoration: BoxDecoration(
                               color: grey,
                               border: Border.all(
-                                color: selectedAge == age ? Colors.red : Colors.transparent,
+                                color: selectedAge == age
+                                    ? Colors.red
+                                    : Colors.transparent,
                                 width: 4.w,
                               ),
                               borderRadius: BorderRadius.circular(32.r),
@@ -111,7 +113,9 @@ class _GetChildrenAgeState extends State<GetChildrenAge> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => SuccessfullyRegistered()),
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const SuccessfullyRegistered()),
                       );
                     },
                     focusNode: saveButtonFocusNode, // Fokusni qo'shish

@@ -38,11 +38,13 @@ class _GetBirthdayState extends State<GetBirthday> {
       FocusScope.of(context).requestFocus(_dayFocusNode);
     });
   }
+
   void _onFocusChange() {
     setState(() {
       _continueButtonFocusNode.hasFocus ? Colors.red : lightGrey;
     });
   }
+
   void _validateAndSubmit() {
     setState(() {
       _isDayValid = _dayController.text.length == 2;
@@ -54,7 +56,8 @@ class _GetBirthdayState extends State<GetBirthday> {
       if (!_showError) {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => SuccessfullyRegistered()),
+          MaterialPageRoute(
+              builder: (context) => const SuccessfullyRegistered()),
         );
       }
     });
@@ -82,9 +85,9 @@ class _GetBirthdayState extends State<GetBirthday> {
         if (_continueButtonFocusNode.hasFocus) {
           _yearFocusNode.requestFocus();
         }
-      } else if ( key == LogicalKeyboardKey.select) {
+      } else if (key == LogicalKeyboardKey.select) {
         _toggleActivate();
-      }else if(key == LogicalKeyboardKey.enter){
+      } else if (key == LogicalKeyboardKey.enter) {
         FocusScope.of(context).nextFocus();
       }
     }
@@ -108,11 +111,8 @@ class _GetBirthdayState extends State<GetBirthday> {
     super.dispose();
   }
 
-  Widget _buildCodeField(
-      TextEditingController controller,
-      FocusNode focusNode,
-      double width,
-      String hintText) {
+  Widget _buildCodeField(TextEditingController controller, FocusNode focusNode,
+      double width, String hintText) {
     return Focus(
       onFocusChange: (hasFocus) {
         setState(() {}); // Rebuild on focus change to update the border color
@@ -127,10 +127,10 @@ class _GetBirthdayState extends State<GetBirthday> {
             color: focusNode.hasFocus
                 ? Colors.white
                 : (controller.text.isEmpty && !_showError)
-                ? grey
-                : controller.text.isEmpty
-                ? Colors.red
-                : grey,
+                    ? grey
+                    : controller.text.isEmpty
+                        ? Colors.red
+                        : grey,
             width: 2.0,
           ),
           color: grey,
@@ -147,7 +147,8 @@ class _GetBirthdayState extends State<GetBirthday> {
           maxLength: width == 140.w ? 4 : 2,
           decoration: InputDecoration(
             hintText: hintText,
-            hintStyle: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 24.sp),
+            hintStyle: TextStyle(
+                color: Colors.white.withOpacity(0.5), fontSize: 24.sp),
             counterText: "",
             border: InputBorder.none,
           ),
@@ -216,11 +217,14 @@ class _GetBirthdayState extends State<GetBirthday> {
                     SizedBox(height: 16.h),
                     Row(
                       children: [
-                        _buildCodeField(_dayController, _dayFocusNode, 100.w, 'Kun'),
+                        _buildCodeField(
+                            _dayController, _dayFocusNode, 100.w, 'Kun'),
                         SizedBox(width: 16.w),
-                        _buildCodeField(_monthController, _monthFocusNode, 100.w, 'Oy'),
+                        _buildCodeField(
+                            _monthController, _monthFocusNode, 100.w, 'Oy'),
                         SizedBox(width: 16.w),
-                        _buildCodeField(_yearController, _yearFocusNode, 140.w, 'Yil'),
+                        _buildCodeField(
+                            _yearController, _yearFocusNode, 140.w, 'Yil'),
                       ],
                     ),
                     SizedBox(height: 32.h),
@@ -234,7 +238,7 @@ class _GetBirthdayState extends State<GetBirthday> {
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 width: 390.sp,
                 child: Image.asset('assets/images/Logo.png'),
               ),

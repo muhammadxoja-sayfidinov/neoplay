@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:neoplay/core/constants/style.dart';
 import 'package:neoplay/presentation/screens/main_pages/main_screen.dart';
-import 'package:neoplay/presentation/screens/main_pages/profile_screen.dart';
+import 'package:neoplay/presentation/screens/main_pages/PlayerScreen/profile_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/saved_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/search_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/setting_screen.dart';
@@ -29,7 +29,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
   static final FocusNode drawerFocusNode = FocusNode();
   final FocusNode contentFocusNode = FocusNode();
   final FocusNode filterFocusNode = FocusNode();
-
 
   void toggleDrawer() {
     setState(() {
@@ -60,7 +59,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         body = SearchScreen();
         break;
       case 1:
-        body = MainScreen();
+        body = const MainScreen();
         break;
       case 2:
         body = const CatalogScreen();
@@ -83,10 +82,14 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
       backgroundColor: Colors.black,
       body: Shortcuts(
         shortcuts: <LogicalKeySet, Intent>{
-          LogicalKeySet(LogicalKeyboardKey.arrowUp): const _MoveIntent(Direction.up),
-          LogicalKeySet(LogicalKeyboardKey.arrowDown): const _MoveIntent(Direction.down),
-          LogicalKeySet(LogicalKeyboardKey.arrowLeft): const _MoveIntent(Direction.left),
-          LogicalKeySet(LogicalKeyboardKey.arrowRight): const _MoveIntent(Direction.right),
+          LogicalKeySet(LogicalKeyboardKey.arrowUp):
+              const _MoveIntent(Direction.up),
+          LogicalKeySet(LogicalKeyboardKey.arrowDown):
+              const _MoveIntent(Direction.down),
+          LogicalKeySet(LogicalKeyboardKey.arrowLeft):
+              const _MoveIntent(Direction.left),
+          LogicalKeySet(LogicalKeyboardKey.arrowRight):
+              const _MoveIntent(Direction.right),
           LogicalKeySet(LogicalKeyboardKey.select): const _ActivateIntent(),
         },
         child: Actions(
@@ -110,7 +113,9 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                       children: [
                         Expanded(
                           child: Padding(
-                            padding: EdgeInsets.only(left: 162.w, ),
+                            padding: EdgeInsets.only(
+                              left: 162.w,
+                            ),
                             child: body,
                           ),
                         ),
@@ -132,7 +137,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                     },
                     duration: const Duration(milliseconds: 300),
                     height: 1080.h,
-                    padding: EdgeInsets.symmetric(vertical: 80.h, horizontal: isDrawerOpen ? 17.w : 12.w),
+                    padding: EdgeInsets.symmetric(
+                        vertical: 80.h, horizontal: isDrawerOpen ? 17.w : 12.w),
                     decoration: BoxDecoration(
                       color: const Color(0xFF1C1C1E),
                       borderRadius: BorderRadius.only(
@@ -165,45 +171,54 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                               ),
                             ),
                             // Category section for "Catalog"
-                            _focusedDrawerItem == 2 && !contentFocusNode.hasFocus
+                            _focusedDrawerItem == 2 &&
+                                    !contentFocusNode.hasFocus
                                 ? Row(
-                                  children: [
-                                    41.horizontalSpace,
-                                    SizedBox(
-                                      width:300.w ,
-                                      child: Focus(
-                                        focusNode: filterFocusNode,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              "Kategoriyalar",
-                                              style: CustomTextStyle.style500.copyWith(fontSize: 28.sp, color: Colors.white),
-                                            ),
-                                            32.verticalSpace,
-                                            Expanded(
-                                              child: ListView.builder(
-
-                                                itemCount: 5,
-                                                itemBuilder: (context, index) {
-                                                  return _buildCategoryItem(
-                                                    text: _getCategoryText(index),
-                                                    isFocused: _focusedCategoryItem == index,
-                                                    onTap: () {
-                                                      setState(() {
-                                                        _focusedCategoryItem = index;
-                                                      });
-                                                    },
-                                                  );
-                                                },
+                                    children: [
+                                      41.horizontalSpace,
+                                      SizedBox(
+                                        width: 300.w,
+                                        child: Focus(
+                                          focusNode: filterFocusNode,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Kategoriyalar",
+                                                style: CustomTextStyle.style500
+                                                    .copyWith(
+                                                        fontSize: 28.sp,
+                                                        color: Colors.white),
                                               ),
-                                            ),
-                                          ],
+                                              32.verticalSpace,
+                                              Expanded(
+                                                child: ListView.builder(
+                                                  itemCount: 5,
+                                                  itemBuilder:
+                                                      (context, index) {
+                                                    return _buildCategoryItem(
+                                                      text: _getCategoryText(
+                                                          index),
+                                                      isFocused:
+                                                          _focusedCategoryItem ==
+                                                              index,
+                                                      onTap: () {
+                                                        setState(() {
+                                                          _focusedCategoryItem =
+                                                              index;
+                                                        });
+                                                      },
+                                                    );
+                                                  },
+                                                ),
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
-                                    ),
-                                  ],
-                                )
+                                    ],
+                                  )
                                 : Container(),
                           ],
                         ),
@@ -279,6 +294,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         return 'Barchasi';
     }
   }
+
   Widget _buildDrawerItem({
     required IconData icon,
     required String text,
@@ -296,8 +312,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           color: isSelected & isOpen
               ? Colors.red.shade600
               : isFocused
-              ? Colors.grey.shade800
-              : Colors.transparent,
+                  ? Colors.grey.shade800
+                  : Colors.transparent,
           border: isSelected
               ? Border(left: BorderSide(width: 5.w, color: Colors.red))
               : null,
@@ -307,7 +323,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           ),
         ),
         child: Row(
-          mainAxisAlignment: isOpen ? MainAxisAlignment.start : MainAxisAlignment.center,
+          mainAxisAlignment:
+              isOpen ? MainAxisAlignment.start : MainAxisAlignment.center,
           children: [
             Icon(icon, color: Colors.white, size: 30.sp),
             if (openText && isOpen) ...[
@@ -333,6 +350,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
       ),
     );
   }
+
   Widget _buildCategoryItem({
     required String text,
     required bool isFocused,
@@ -344,78 +362,78 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         padding: EdgeInsets.symmetric(horizontal: 32.w),
         height: 60.h,
         decoration: BoxDecoration(
-          color: isFocused && filterFocusNode.hasFocus  ? Colors.red.shade600 : Colors.transparent,
+          color: isFocused && filterFocusNode.hasFocus
+              ? Colors.red.shade600
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(50.r),
         ),
-        child:  Row(
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-          Text(
-          text,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 18.sp,
-          ),),
-            isFocused   ?SvgPicture.asset("assets/images/check.svg"
-                ,width: 24.w,
-            ):SizedBox(
-
+            Text(
+              text,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.sp,
+              ),
             ),
+            isFocused
+                ? SvgPicture.asset(
+                    "assets/images/check.svg",
+                    width: 24.w,
+                  )
+                : const SizedBox(),
           ],
-
-
         ),
       ),
     );
   }
 
   void _handleMove(Direction direction) {
-      if (direction == Direction.left  ) {
-      if(!isDrawerOpen) {
+    if (direction == Direction.left) {
+      if (!isDrawerOpen) {
         setState(() {
           isDrawerOpen = true;
           _focusedDrawerItem = selectedPage;
         });
       }
-      if(filterFocusNode.hasFocus){
+      if (filterFocusNode.hasFocus) {
         setState(() {
           drawerFocusNode.requestFocus();
         });
       }
       drawerFocusNode.requestFocus();
-    } else
-      if (isDrawerOpen) {
+    } else if (isDrawerOpen) {
       if (direction == Direction.up) {
         setState(() {
-          if(filterFocusNode.hasFocus && _focusedCategoryItem > 0){
-            _focusedCategoryItem=_focusedCategoryItem-1;
-
-          }else{
-          _focusedDrawerItem = (_focusedDrawerItem > 0) ? _focusedDrawerItem - 1 : _focusedDrawerItem;}
-        });
-      } else
-      if (direction == Direction.down) {
-        setState(() {
-          if(filterFocusNode.hasFocus && _focusedCategoryItem < 4){
-            _focusedCategoryItem=_focusedCategoryItem+1;
-          }else{
-            _focusedDrawerItem = (_focusedDrawerItem < 6) ? _focusedDrawerItem + 1 : _focusedDrawerItem;
-
+          if (filterFocusNode.hasFocus && _focusedCategoryItem > 0) {
+            _focusedCategoryItem = _focusedCategoryItem - 1;
+          } else {
+            _focusedDrawerItem = (_focusedDrawerItem > 0)
+                ? _focusedDrawerItem - 1
+                : _focusedDrawerItem;
           }
         });
-      } else
-      if (direction == Direction.right) {
-        if(_focusedDrawerItem ==2){
-            setState(() {
-              filterFocusNode.requestFocus();
-            });
-        }else{
+      } else if (direction == Direction.down) {
+        setState(() {
+          if (filterFocusNode.hasFocus && _focusedCategoryItem < 4) {
+            _focusedCategoryItem = _focusedCategoryItem + 1;
+          } else {
+            _focusedDrawerItem = (_focusedDrawerItem < 6)
+                ? _focusedDrawerItem + 1
+                : _focusedDrawerItem;
+          }
+        });
+      } else if (direction == Direction.right) {
+        if (_focusedDrawerItem == 2) {
+          setState(() {
+            filterFocusNode.requestFocus();
+          });
+        } else {
           toggleDrawer();
           contentFocusNode.requestFocus();
         }
-
-
       }
     }
   }
@@ -433,6 +451,7 @@ enum Direction { up, down, left, right }
 
 class _MoveIntent extends Intent {
   const _MoveIntent(this.direction);
+
   final Direction direction;
 }
 

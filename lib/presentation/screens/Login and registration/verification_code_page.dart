@@ -14,12 +14,14 @@ class VerificationCodePage extends StatefulWidget {
 
 class _VerificationCodePageState extends State<VerificationCodePage> {
   final _formKey = GlobalKey<FormState>();
-  final List<TextEditingController> _controllers = List.generate(6, (_) => TextEditingController());
+  final List<TextEditingController> _controllers =
+      List.generate(6, (_) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   final FocusNode _submitButtonFocusNode = FocusNode();
-  final FocusNode _focusScope =FocusNode();
+  final FocusNode _focusScope = FocusNode();
 
   bool _showError = false;
+
   @override
   void initState() {
     super.initState();
@@ -39,17 +41,17 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Shortcuts(
       shortcuts: <LogicalKeySet, Intent>{
-        LogicalKeySet(LogicalKeyboardKey.arrowDown): const _ToggleIntent(Direction.down),
-        LogicalKeySet(LogicalKeyboardKey.arrowUp): const _ToggleIntent(Direction.up),
-        LogicalKeySet(LogicalKeyboardKey.tvNumberEntry): const _ToggleIntent(Direction.enter),
-
+        LogicalKeySet(LogicalKeyboardKey.arrowDown):
+            const _ToggleIntent(Direction.down),
+        LogicalKeySet(LogicalKeyboardKey.arrowUp):
+            const _ToggleIntent(Direction.up),
+        LogicalKeySet(LogicalKeyboardKey.tvNumberEntry):
+            const _ToggleIntent(Direction.enter),
         LogicalKeySet(LogicalKeyboardKey.select): const _ActivateIntent(),
-
       },
       child: Actions(
         actions: <Type, Action<Intent>>{
@@ -68,14 +70,16 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
               children: [
                 Container(
                   width: 680.sp,
-                  padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 50.h),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 24.w, vertical: 50.h),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "Ro'yxatdan o'tishni tasdiqlang",
-                        style: CustomTextStyle.style600.copyWith(fontSize: 38.sp),
+                        style:
+                            CustomTextStyle.style600.copyWith(fontSize: 38.sp),
                       ),
                       SizedBox(height: 24.h),
                       Text(
@@ -85,18 +89,16 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                       ),
                       SizedBox(height: 24.h),
                       Form(
-
                         key: _formKey,
                         child: Focus(
                           focusNode: _focusScope,
                           child: Row(
-
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: List.generate(6, (index) {
                               return Padding(
                                 padding: EdgeInsets.all(4.w),
-                                child: _buildCodeField(
-                                    _controllers[index], _focusNodes[index], index),
+                                child: _buildCodeField(_controllers[index],
+                                    _focusNodes[index], index),
                               );
                             }),
                           ),
@@ -115,7 +117,8 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                         onPressed: _validateInputs,
                         name: 'Tasdiqlash',
                         width: double.infinity,
-                        color:_submitButtonFocusNode.hasFocus ? red : lightGrey,
+                        color:
+                            _submitButtonFocusNode.hasFocus ? red : lightGrey,
                         focusNode: _submitButtonFocusNode,
                       ),
                       SizedBox(height: 16.h),
@@ -131,7 +134,8 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
                 ),
                 Container(
                   width: 390.sp,
-                  child: Image(image: AssetImage('assets/images/Logo.png')),
+                  child:
+                      const Image(image: AssetImage('assets/images/Logo.png')),
                 ),
               ],
             ),
@@ -141,10 +145,13 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     );
   }
 
-  Widget _buildCodeField(TextEditingController controller, FocusNode focusNode, int index) {
+  Widget _buildCodeField(
+      TextEditingController controller, FocusNode focusNode, int index) {
     return Container(
-      width: 72.w, // Square input field
-      height: 72.w, // Square input field
+      width: 72.w,
+      // Square input field
+      height: 72.w,
+      // Square input field
       padding: EdgeInsets.only(bottom: 20.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
@@ -152,28 +159,28 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
           color: focusNode.hasFocus
               ? Colors.white // Change border color to white when focused
               : controller.text.isEmpty && _showError
-              ? Colors.red
-              : grey,
+                  ? Colors.red
+                  : grey,
           width: 2.0,
         ),
         color: grey,
       ),
       child: TextFormField(
-
         controller: controller,
         focusNode: focusNode,
         style: TextStyle(
           color: Colors.white,
           fontSize: 24.sp,
         ),
-        textAlign: TextAlign.center, // Center text horizontally
+        textAlign: TextAlign.center,
+        // Center text horizontally
         keyboardType: TextInputType.number,
         maxLength: 1,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           counterText: "",
           border: InputBorder.none,
         ),
-        onSaved: (value){
+        onSaved: (value) {
           _submitButtonFocusNode.requestFocus();
         },
         onChanged: (value) {
@@ -187,31 +194,30 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
               _focusNodes[index].unfocus();
               FocusScope.of(context).requestFocus(_submitButtonFocusNode);
             }
-          } else if (value.isEmpty ) {
-            _focusNodes[index ].requestFocus();
+          } else if (value.isEmpty) {
+            _focusNodes[index].requestFocus();
           }
         },
       ),
     );
   }
-  void _handleToggle(Direction direction) {
-      if(direction == Direction.down){
-          if(_focusScope.hasFocus){
-            _submitButtonFocusNode.requestFocus();
-          }
-      }
-  }
 
+  void _handleToggle(Direction direction) {
+    if (direction == Direction.down) {
+      if (_focusScope.hasFocus) {
+        _submitButtonFocusNode.requestFocus();
+      }
+    }
+  }
 
   void _toggleActivate() {
-      if(_submitButtonFocusNode.hasFocus){
-
-        setState(() {
-          _validateInputs();
-        });
-
-      }
+    if (_submitButtonFocusNode.hasFocus) {
+      setState(() {
+        _validateInputs();
+      });
+    }
   }
+
   void _validateInputs() {
     setState(() {
       _showError = _controllers.any((controller) => controller.text.isEmpty);
@@ -220,7 +226,7 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
     if (!_showError) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => GetBirthday()),
+        MaterialPageRoute(builder: (context) => const GetBirthday()),
       );
     } else {
       _controllers.forEach((controller) => controller.clear());
@@ -229,14 +235,13 @@ class _VerificationCodePageState extends State<VerificationCodePage> {
       }
     }
   }
-
 }
 
-
-enum Direction { up, down,enter }
+enum Direction { up, down, enter }
 
 class _ToggleIntent extends Intent {
   const _ToggleIntent(this.direction);
+
   final Direction direction;
 }
 

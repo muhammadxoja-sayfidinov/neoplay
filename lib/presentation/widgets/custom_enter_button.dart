@@ -59,7 +59,7 @@ class _CustomEnterButtonState extends State<CustomEnterButton> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               width: 32.sp,
               child: SvgPicture.asset(widget.svg),
             ),
@@ -68,8 +68,9 @@ class _CustomEnterButtonState extends State<CustomEnterButton> {
             ),
             Text(
               widget.text,
-              style: CustomTextStyle.style400
-                  .copyWith(fontSize: 28.sp, color:hasFocus? Colors.white: Colors.white24),
+              style: CustomTextStyle.style400.copyWith(
+                  fontSize: 28.sp,
+                  color: hasFocus ? Colors.white : Colors.white24),
             ),
           ],
         ),

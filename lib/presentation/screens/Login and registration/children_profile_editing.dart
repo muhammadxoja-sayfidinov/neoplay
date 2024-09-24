@@ -29,9 +29,11 @@ class _ChildrenProfileEditingState extends State<ChildrenProfileEditing> {
     saveButtonFocusNode.dispose();
     super.dispose();
   }
+
   void _handleSubmitted(String value, FocusNode nextFocusNode) {
     FocusScope.of(context).requestFocus(nextFocusNode);
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -68,7 +70,8 @@ class _ChildrenProfileEditingState extends State<ChildrenProfileEditing> {
                       children: [
                         CircleAvatar(
                           radius: 120.r,
-                          backgroundImage: AssetImage("assets/images/children_logo.png"),
+                          backgroundImage: const AssetImage(
+                              "assets/images/children_logo.png"),
                         ),
                       ],
                     ),
@@ -104,7 +107,7 @@ class _ChildrenProfileEditingState extends State<ChildrenProfileEditing> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => GetChildrenAge()),
+                              builder: (context) => const GetChildrenAge()),
                         );
                       },
                       focusNode: saveButtonFocusNode, // Fokusni qo'shish
@@ -117,8 +120,5 @@ class _ChildrenProfileEditingState extends State<ChildrenProfileEditing> {
         ),
       ),
     );
-
-
-}}
-
-
+  }
+}

@@ -23,7 +23,8 @@ class _SearchScreenState extends State<SearchScreen> {
   int _focusedIndex = 0;
 
   final ScrollController _scrollController = ScrollController();
-  final List<FocusNode> _focusNodes =  List<FocusNode>.generate(movies.length, (_) => FocusNode());
+  final List<FocusNode> _focusNodes =
+      List<FocusNode>.generate(movies.length, (_) => FocusNode());
 
   bool haveSearch = false;
 
@@ -70,21 +71,20 @@ class _SearchScreenState extends State<SearchScreen> {
           setState(() {
             _focusNodes[_focusedIndex].requestFocus();
           });
-        }else if(_focusNodes[_focusedIndex].hasFocus &&
-            _focusedIndex < movies.length - 6){
+        } else if (_focusNodes[_focusedIndex].hasFocus &&
+            _focusedIndex < movies.length - 6) {
           _moveFocus(6);
         }
-      }else if(key == LogicalKeyboardKey.arrowUp) {
-          if(_focusNodes[_focusedIndex].hasFocus && _focusedIndex > 5){
-            _moveFocus(-6);
-          }else if(_focusNodes[_focusedIndex].hasFocus && _focusedIndex < 6){
-              searchFieldFocusNode.requestFocus();
-          }
-      }else if (key == LogicalKeyboardKey.arrowLeft) {
-        if(searchFieldFocusNode.hasFocus){
-            FocusScope.of(context).previousFocus();
-
-        }else if (_focusNodes[_focusedIndex].hasFocus && _focusedIndex > 0) {
+      } else if (key == LogicalKeyboardKey.arrowUp) {
+        if (_focusNodes[_focusedIndex].hasFocus && _focusedIndex > 5) {
+          _moveFocus(-6);
+        } else if (_focusNodes[_focusedIndex].hasFocus && _focusedIndex < 6) {
+          searchFieldFocusNode.requestFocus();
+        }
+      } else if (key == LogicalKeyboardKey.arrowLeft) {
+        if (searchFieldFocusNode.hasFocus) {
+          FocusScope.of(context).previousFocus();
+        } else if (_focusNodes[_focusedIndex].hasFocus && _focusedIndex > 0) {
           _moveFocus(-1);
         } else {
           FocusScope.of(context).previousFocus();
@@ -141,7 +141,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       color: gilosNeutralWhite,
                     ),
                     decoration: InputDecoration(
-                      icon: Container(
+                      icon: SizedBox(
                         width: 36.w,
                         child:
                             SvgPicture.asset("assets/images/search_logo.svg"),
@@ -201,7 +201,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               ],
                             ),
                           )
-                        : Container(
+                        : SizedBox(
                             height: 630.h,
                             child: SingleChildScrollView(
                               physics: const NeverScrollableScrollPhysics(),

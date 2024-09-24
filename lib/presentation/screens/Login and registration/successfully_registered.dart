@@ -20,11 +20,10 @@ class _SuccessfullyRegisteredState extends State<SuccessfullyRegistered> {
   final FocusNode laterButtonFocusNode = FocusNode();
 
   @override
-void initState() {
+  void initState() {
     // TODO: implement initState
     super.initState();
     enableProtectionButtonFocusNode.requestFocus();
-
   }
 
   @override
@@ -47,24 +46,24 @@ void initState() {
         if (laterButtonFocusNode.hasFocus) {
           enableProtectionButtonFocusNode.requestFocus();
         }
-      } else if ( key == LogicalKeyboardKey.select) {
-          if(enableProtectionButtonFocusNode.hasFocus){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => EnableProtection()),
-            );
-
-          }else if(laterButtonFocusNode.hasFocus){
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MainScreen()),
-            );
-          }
-      }else if(key == LogicalKeyboardKey.enter){
+      } else if (key == LogicalKeyboardKey.select) {
+        if (enableProtectionButtonFocusNode.hasFocus) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const EnableProtection()),
+          );
+        } else if (laterButtonFocusNode.hasFocus) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MainScreen()),
+          );
+        }
+      } else if (key == LogicalKeyboardKey.enter) {
         FocusScope.of(context).nextFocus();
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
@@ -82,9 +81,10 @@ void initState() {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 390.sp,
-                    child: Image(image: AssetImage('assets/images/Logo.png')),
+                    child: const Image(
+                        image: const AssetImage('assets/images/Logo.png')),
                   ),
                 ],
               ),
@@ -93,23 +93,26 @@ void initState() {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 402.sp,
-                      child: Image(image: AssetImage('assets/images/kattalar.png')),
+                      child: const Image(
+                          image: AssetImage('assets/images/kattalar.png')),
                     ),
-                    Container(
+                    SizedBox(
                       width: 704.w,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "Ajoyib! Siz 3 ta oila a'zongiz uchun profil yaratishingiz, shuningdek, kattalar profilini bolalardan himoya qilishingiz mumkin",
-                            style: CustomTextStyle.style600.copyWith(fontSize: 38.sp),
+                            style: CustomTextStyle.style600
+                                .copyWith(fontSize: 38.sp),
                           ),
                           40.sp.verticalSpace,
                           Text(
                             "Agar qurilmadan bolalar foydalanishi mumkin bo'lsa, himoyani yoqishni tavsiya qilamiz. Keyin, kattalar profiliga o'tish uchun siz faqat o'zingiz biladigan kodni kiritishingiz kerak bo'ladi.",
-                            style: CustomTextStyle.style400.copyWith(fontSize: 28.sp),
+                            style: CustomTextStyle.style400
+                                .copyWith(fontSize: 28.sp),
                           ),
                           48.sp.verticalSpace,
                           Row(
@@ -121,10 +124,13 @@ void initState() {
                                 onPressed: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => EnableProtection()),
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const EnableProtection()),
                                   );
                                 },
-                                focusNode: enableProtectionButtonFocusNode, // Fokusni qo'shish
+                                focusNode:
+                                    enableProtectionButtonFocusNode, // Fokusni qo'shish
                               ),
                               32.sp.horizontalSpace,
                               CustomButton(
@@ -132,16 +138,18 @@ void initState() {
                                 width: 200.sp,
                                 name: "Keyinroq",
                                 onPressed: () {},
-                                focusNode: laterButtonFocusNode, // Fokusni qo'shish
+                                focusNode:
+                                    laterButtonFocusNode, // Fokusni qo'shish
                               ),
                             ],
                           ),
                         ],
                       ),
                     ),
-                    Container(
+                    SizedBox(
                       width: 402.sp,
-                      child: Image(image: AssetImage('assets/images/kids.png')),
+                      child: const Image(
+                          image: AssetImage('assets/images/kids.png')),
                     ),
                   ],
                 ),

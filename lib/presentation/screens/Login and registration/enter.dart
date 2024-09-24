@@ -41,9 +41,9 @@ class _EnterState extends State<Enter> with SingleTickerProviderStateMixin {
       body: Shortcuts(
         shortcuts: <LogicalKeySet, Intent>{
           LogicalKeySet(LogicalKeyboardKey.arrowLeft):
-          const _ToggleIntent(Direction.left),
+              const _ToggleIntent(Direction.left),
           LogicalKeySet(LogicalKeyboardKey.arrowRight):
-          const _ToggleIntent(Direction.right),
+              const _ToggleIntent(Direction.right),
           LogicalKeySet(LogicalKeyboardKey.select): const _ActivateIntent(),
         },
         child: Actions(
@@ -76,16 +76,16 @@ class _EnterState extends State<Enter> with SingleTickerProviderStateMixin {
                         height: 48.h,
                       ),
                       Expanded(
-
-                          child: _currentIndex == 0 ? const LogIn() : const SignUp(),
-                        ),
-
+                        child:
+                            _currentIndex == 0 ? const LogIn() : const SignUp(),
+                      ),
                     ],
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 390.sp,
-                  child: const Image(image: AssetImage('assets/images/Logo.png')),
+                  child:
+                      const Image(image: AssetImage('assets/images/Logo.png')),
                 ),
               ],
             ),
@@ -96,32 +96,29 @@ class _EnterState extends State<Enter> with SingleTickerProviderStateMixin {
   }
 
   void _handleToggle(Direction direction) {
-    if (direction == Direction.right && _focusToggle1.hasFocus ) {
+    if (direction == Direction.right && _focusToggle1.hasFocus) {
       setState(() {
         _focusToggle2.requestFocus();
       });
-
-    } else if (direction == Direction.left &&  _focusToggle2.hasFocus ) {
+    } else if (direction == Direction.left && _focusToggle2.hasFocus) {
       setState(() {
         _focusToggle1.requestFocus();
       });
-
     }
   }
 
   void _toggleActivate() {
-   if( _focusToggle2.hasFocus){
-     setState(() {
-       _onToggle(1);
-     });
-   }
+    if (_focusToggle2.hasFocus) {
+      setState(() {
+        _onToggle(1);
+      });
+    }
 
-
-   if(_focusToggle1.hasFocus){
-     setState(() {
-       _onToggle(0);
-     });
-   }
+    if (_focusToggle1.hasFocus) {
+      setState(() {
+        _onToggle(0);
+      });
+    }
   }
 }
 
@@ -129,6 +126,7 @@ enum Direction { left, right }
 
 class _ToggleIntent extends Intent {
   const _ToggleIntent(this.direction);
+
   final Direction direction;
 }
 

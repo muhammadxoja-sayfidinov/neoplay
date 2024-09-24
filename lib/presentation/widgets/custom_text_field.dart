@@ -10,15 +10,16 @@ class CustomTextField extends StatefulWidget {
   final TextInputType keyboardType;
   final bool onSubmitted;
   final FocusNode focusNode;
-  final FocusNode ?nextFocusNode;
+  final FocusNode? nextFocusNode;
+
   const CustomTextField({
     Key? key,
     required this.hintText,
     this.onSubmitted = false,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
-    required this.focusNode,  // FocusNode qo'shildi
-    this.nextFocusNode,  // FocusNode qo'shildi
+    required this.focusNode, // FocusNode qo'shildi
+    this.nextFocusNode, // FocusNode qo'shildi
   }) : super(key: key);
 
   @override
@@ -43,39 +44,43 @@ class _CustomTextFieldState extends State<CustomTextField> {
   void _onFocusChange() {
     setState(() {});
   }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: 60.h,
       child: TextField(
-        onTap:() {
+        onTap: () {
           SystemChannels.textInput.invokeMethod('TextInput.show');
         },
 
         onSubmitted: (value) {
-    SystemChannels.textInput.invokeMethod('TextInput.hide');
-    FocusScope.of(context).requestFocus(widget.nextFocusNode);// Klaviaturani yopish
-    },
-        focusNode: widget.focusNode,  // FocusNode ni TextField ga bog'lash
+          SystemChannels.textInput.invokeMethod('TextInput.hide');
+          FocusScope.of(context)
+              .requestFocus(widget.nextFocusNode); // Klaviaturani yopish
+        },
+        focusNode: widget.focusNode,
+        // FocusNode ni TextField ga bog'lash
         obscureText: widget.obscureText,
         keyboardType: widget.keyboardType,
-        style: TextStyle(color: Colors.white),
+        style: const TextStyle(color: Colors.white),
         decoration: InputDecoration(
           filled: true,
           fillColor: lightGrey,
           hintText: widget.hintText,
           hintStyle: CustomTextStyle.style400.copyWith(fontSize: 24.sp),
-          contentPadding: EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
+          contentPadding:
+              EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.r),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: lightGrey,
               width: 1.0,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.r),
-            borderSide: BorderSide(
+            borderSide: const BorderSide(
               color: Colors.red,
               width: 1.0,
             ),

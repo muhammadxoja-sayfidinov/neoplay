@@ -57,9 +57,7 @@ class _LoginRegisterToggleState extends State<LoginRegisterToggle> {
       child: Focus(
         focusNode: focusNode,
         onFocusChange: (hasFocus) {
-          setState(() {
-
-          });
+          setState(() {});
         },
         onKey: (FocusNode node, RawKeyEvent event) {
           if (event is RawKeyDownEvent) {
@@ -93,16 +91,15 @@ class _LoginRegisterToggleState extends State<LoginRegisterToggle> {
               color: focusNode.hasFocus
                   ? Colors.red
                   : _selectedIndex == index
-                  ? lightGrey
-                  : Colors.black,
-
+                      ? lightGrey
+                      : Colors.black,
               borderRadius: BorderRadius.circular(60.0),
             ),
             child: Center(
               child: Text(
                 text,
-                style: TextStyle(
-                  color:  Colors.white ,
+                style: const TextStyle(
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
               ),

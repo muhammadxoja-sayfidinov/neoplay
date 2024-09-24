@@ -76,13 +76,13 @@ class MovieCard extends StatelessWidget {
   }
 
   Widget _buildRatingBadge(
-      String logoPath,
-      double rating,
-      Color color,
-      double imgWidth,
-      double imgHeight,
-      double boxWidth,
-      ) {
+    String logoPath,
+    double rating,
+    Color color,
+    double imgWidth,
+    double imgHeight,
+    double boxWidth,
+  ) {
     return Container(
       width: boxWidth,
       height: 30.sp,
@@ -93,7 +93,7 @@ class MovieCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
+          SizedBox(
             width: imgWidth.w,
             height: imgHeight.sp,
             child: SvgPicture.asset(

@@ -5,7 +5,8 @@ import 'package:neoplay/core/constants/style.dart';
 import 'package:neoplay/presentation/widgets/custom_button.dart';
 
 class LanguageSelection extends StatefulWidget {
-  static final String id = "language_selection";
+  static const String id = "language_selection";
+
   const LanguageSelection({super.key});
 
   @override

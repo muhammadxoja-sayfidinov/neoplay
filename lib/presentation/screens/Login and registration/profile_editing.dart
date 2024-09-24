@@ -21,9 +21,11 @@ class _ProfileEditingState extends State<ProfileEditing> {
   final FocusNode maleGenderFocusNode = FocusNode();
   final FocusNode femaleGenderFocusNode = FocusNode();
   final FocusNode saveButtonFocusNode = FocusNode();
+
   void _handleSubmitted(String value, FocusNode nextFocusNode) {
     FocusScope.of(context).requestFocus(nextFocusNode);
   }
+
   @override
   void dispose() {
     // FocusNode larni tozalash
@@ -69,7 +71,8 @@ class _ProfileEditingState extends State<ProfileEditing> {
                     children: [
                       CircleAvatar(
                         radius: 120.r,
-                        backgroundImage: AssetImage("assets/images/man_logo.png"),
+                        backgroundImage:
+                            const AssetImage("assets/images/man_logo.png"),
                       ),
                     ],
                   ),
@@ -104,11 +107,10 @@ class _ProfileEditingState extends State<ProfileEditing> {
                   ),
                   20.verticalSpace,
                   Container(
-                    padding: EdgeInsets.all(2),
+                    padding: const EdgeInsets.all(2),
                     decoration: BoxDecoration(
                         color: lightGrey,
-                        borderRadius: BorderRadius.circular(50.r)
-                    ),
+                        borderRadius: BorderRadius.circular(50.r)),
                     child: Row(
                       children: [
                         Expanded(
@@ -119,7 +121,8 @@ class _ProfileEditingState extends State<ProfileEditing> {
                               });
                             },
                             child: Focus(
-                              focusNode: maleGenderFocusNode, // Fokusni qo'shish
+                              focusNode: maleGenderFocusNode,
+                              // Fokusni qo'shish
                               child: Container(
                                 height: 56.sp,
                                 decoration: BoxDecoration(
@@ -150,7 +153,8 @@ class _ProfileEditingState extends State<ProfileEditing> {
                               });
                             },
                             child: Focus(
-                              focusNode: femaleGenderFocusNode, // Fokusni qo'shish
+                              focusNode: femaleGenderFocusNode,
+                              // Fokusni qo'shish
                               child: Container(
                                 height: 56.sp,
                                 decoration: BoxDecoration(
@@ -164,7 +168,7 @@ class _ProfileEditingState extends State<ProfileEditing> {
                                     'Ayol',
                                     style: CustomTextStyle.style400.copyWith(
                                       fontSize: 24.sp,
-                                      color:  Colors.white,
+                                      color: Colors.white,
                                     ),
                                   ),
                                 ),

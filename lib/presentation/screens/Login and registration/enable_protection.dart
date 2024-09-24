@@ -14,7 +14,8 @@ class EnableProtection extends StatefulWidget {
 }
 
 class _EnableProtectionState extends State<EnableProtection> {
-  List<TextEditingController> pinControllers = List.generate(4, (_) => TextEditingController());
+  List<TextEditingController> pinControllers =
+      List.generate(4, (_) => TextEditingController());
   List<FocusNode> focusNodes = List.generate(4, (_) => FocusNode());
 
   final FocusNode continueButtonFocusNode = FocusNode();
@@ -49,23 +50,22 @@ class _EnableProtectionState extends State<EnableProtection> {
         _focusNextField();
       } else if (key == LogicalKeyboardKey.arrowLeft) {
         _focusPreviousField();
-      }else if(key == LogicalKeyboardKey.arrowDown){
-        for(var node in focusNodes  ){
-          if(node.hasFocus){
+      } else if (key == LogicalKeyboardKey.arrowDown) {
+        for (var node in focusNodes) {
+          if (node.hasFocus) {
             continueButtonFocusNode.requestFocus();
           }
         }
 
-        if(continueButtonFocusNode.hasFocus){
+        if (continueButtonFocusNode.hasFocus) {
           cancelButtonFocusNode.requestFocus();
         }
-      }else if(key == LogicalKeyboardKey.arrowUp)  {
-          if(cancelButtonFocusNode.hasFocus){
-            continueButtonFocusNode.requestFocus();
-          }else if(continueButtonFocusNode.hasFocus){
-            focusNodes[0].requestFocus();
-          }
-
+      } else if (key == LogicalKeyboardKey.arrowUp) {
+        if (cancelButtonFocusNode.hasFocus) {
+          continueButtonFocusNode.requestFocus();
+        } else if (continueButtonFocusNode.hasFocus) {
+          focusNodes[0].requestFocus();
+        }
       }
 
       // Submit actions on Enter or Select
@@ -110,7 +110,7 @@ class _EnableProtectionState extends State<EnableProtection> {
   void _navigateToMainPage() {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MainNavigationPage()),
+      MaterialPageRoute(builder: (context) => const MainNavigationPage()),
     );
   }
 
@@ -136,9 +136,10 @@ class _EnableProtectionState extends State<EnableProtection> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Container(
+                  SizedBox(
                     width: 390.sp,
-                    child: Image(image: AssetImage('assets/images/Logo.png')),
+                    child: const Image(
+                        image: AssetImage('assets/images/Logo.png')),
                   ),
                 ],
               ),
@@ -147,7 +148,7 @@ class _EnableProtectionState extends State<EnableProtection> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Container(
+                    SizedBox(
                       width: 350.w,
                       child: Text(
                         "PIN kodni yarating va eslab oling",
@@ -171,7 +172,9 @@ class _EnableProtectionState extends State<EnableProtection> {
                               color: Colors.grey[850],
                               borderRadius: BorderRadius.circular(20.r),
                               border: Border.all(
-                                color: focusNodes[index].hasFocus ? Colors.red : Colors.grey,
+                                color: focusNodes[index].hasFocus
+                                    ? Colors.red
+                                    : Colors.grey,
                                 width: 2.w,
                               ),
                             ),
@@ -186,7 +189,7 @@ class _EnableProtectionState extends State<EnableProtection> {
                               ),
                               keyboardType: TextInputType.number,
                               maxLength: 1,
-                              decoration: InputDecoration(
+                              decoration: const InputDecoration(
                                 counterText: "",
                                 border: InputBorder.none,
                               ),

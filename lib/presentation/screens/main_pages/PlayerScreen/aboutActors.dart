@@ -128,8 +128,202 @@ class _AboutActorsState extends State<AboutActors> {
                     );
                   }),
             ),
-            80.verticalSpace,
-            Expanded(child: )
+            70.sp.verticalSpace,
+            Expanded(
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Rejissorlar',
+                            style: TextStyle(
+                                fontSize: 28.sp, fontWeight: FontWeight.w500)),
+                        18.verticalSpace,
+                        Expanded(
+                          child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              controller: _actorsScrollController,
+                              itemCount: 3,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                return InkWell(
+                                  onTap: () {
+                                    _scrollToIndex(
+                                        _actorsScrollController, index, 350.w);
+                                    setState(() {});
+                                    currentIndex = index;
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 16.w),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 146.w,
+                                          height: 146.w,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xff7c94b6),
+                                            image: DecorationImage(
+                                              image:
+                                                  AssetImage(actorList[index]),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100.0.r)),
+                                            border: Border.all(
+                                              color: currentIndex == index
+                                                  ? red
+                                                  : Colors.transparent,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                        ),
+                                        12.verticalSpace,
+                                        Text(actorNameList[index],
+                                            style: TextStyle(
+                                                fontSize: 22.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: currentIndex == index
+                                                    ? red
+                                                    : Colors.white)),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Ssenariy mualliflari',
+                            style: TextStyle(
+                                fontSize: 28.sp, fontWeight: FontWeight.w500)),
+                        18.verticalSpace,
+                        Expanded(
+                          child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              controller: _actorsScrollController,
+                              itemCount: 3,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                return InkWell(
+                                  onTap: () {
+                                    _scrollToIndex(
+                                        _actorsScrollController, index, 350.w);
+                                    setState(() {});
+                                    currentIndex = index + 3;
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 16.w),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 146.w,
+                                          height: 146.w,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xff7c94b6),
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  actorList[index + 3]),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100.0.r)),
+                                            border: Border.all(
+                                              color: currentIndex == index + 3
+                                                  ? red
+                                                  : Colors.transparent,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                        ),
+                                        12.verticalSpace,
+                                        Text(actorNameList[index + 3],
+                                            style: TextStyle(
+                                                fontSize: 22.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: currentIndex == index + 3
+                                                    ? red
+                                                    : Colors.white)),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Prodyuserlar',
+                            style: TextStyle(
+                                fontSize: 28.sp, fontWeight: FontWeight.w500)),
+                        18.verticalSpace,
+                        Expanded(
+                          child: ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              controller: _actorsScrollController,
+                              itemCount: 3,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                return InkWell(
+                                  onTap: () {
+                                    _scrollToIndex(
+                                        _actorsScrollController, index, 350.w);
+                                    setState(() {});
+                                    currentIndex = index + 5;
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(left: 16.w),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 146.w,
+                                          height: 146.w,
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xff7c94b6),
+                                            image: DecorationImage(
+                                              image: AssetImage(
+                                                  actorList[index + 5]),
+                                              fit: BoxFit.cover,
+                                            ),
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(100.0.r)),
+                                            border: Border.all(
+                                              color: currentIndex == index + 5
+                                                  ? red
+                                                  : Colors.transparent,
+                                              width: 2.0,
+                                            ),
+                                          ),
+                                        ),
+                                        12.verticalSpace,
+                                        Text(actorNameList[index + 5],
+                                            style: TextStyle(
+                                                fontSize: 22.sp,
+                                                fontWeight: FontWeight.w500,
+                                                color: currentIndex == index + 5
+                                                    ? red
+                                                    : Colors.white)),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ));
   }

@@ -4,6 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:neoplay/presentation/screens/main_pages/PlayerScreen/aboutActors.dart';
 import 'package:neoplay/presentation/screens/main_pages/PlayerScreen/aboutMovie.dart';
+import 'package:neoplay/presentation/screens/main_pages/PlayerScreen/comments.dart';
+import 'package:neoplay/presentation/screens/main_pages/PlayerScreen/parts.dart';
+import 'package:neoplay/presentation/screens/main_pages/PlayerScreen/similarMovies.dart';
 
 import '../../../../core/constants/colors.dart';
 import '../../../../core/constants/style.dart';
@@ -25,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       List<FocusNode>.generate(6, (_) => FocusNode());
 
   final List<String> category = [
+    'Qismlar',
     'Film haqida',
     'Ijodkorlar',
     'Fikrlar va baholar',
@@ -253,7 +257,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         }),
                   ),
                   70.verticalSpace,
-                  currentIndex == 0 ? const AboutMovie() : AboutActors()
+                  currentIndex == 0
+                      ? Parts()
+                      : currentIndex == 1
+                          ? const AboutMovie()
+                          : currentIndex == 3
+                              ? const Comments()
+                              : currentIndex == 4
+                                  ? SimilarMovies()
+                                  : AboutActors()
                 ],
               ),
             ),

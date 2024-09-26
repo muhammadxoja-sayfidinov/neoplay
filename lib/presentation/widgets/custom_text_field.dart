@@ -9,7 +9,7 @@ class CustomTextField extends StatefulWidget {
   final bool obscureText;
   final TextInputType keyboardType;
   final bool onSubmitted;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
   final FocusNode? nextFocusNode;
 
   const CustomTextField({
@@ -18,7 +18,7 @@ class CustomTextField extends StatefulWidget {
     this.onSubmitted = false,
     this.obscureText = false,
     this.keyboardType = TextInputType.text,
-    required this.focusNode, // FocusNode qo'shildi
+    this.focusNode, // FocusNode qo'shildi
     this.nextFocusNode, // FocusNode qo'shildi
   }) : super(key: key);
 
@@ -31,13 +31,13 @@ class _CustomTextFieldState extends State<CustomTextField> {
   void initState() {
     super.initState();
     // Add a listener to the focusNode to rebuild the widget when the focus changes.
-    widget.focusNode.addListener(_onFocusChange);
+    widget.focusNode?.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
     // Remove the listener when the widget is disposed of.
-    widget.focusNode.removeListener(_onFocusChange);
+    widget.focusNode?.removeListener(_onFocusChange);
     super.dispose();
   }
 
@@ -74,7 +74,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.r),
             borderSide: const BorderSide(
-              color: lightGrey,
+              color: gilosNeutral600,
               width: 1.0,
             ),
           ),

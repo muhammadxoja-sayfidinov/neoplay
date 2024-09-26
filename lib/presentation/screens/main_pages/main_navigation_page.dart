@@ -24,6 +24,7 @@ class MainNavigationPage extends StatefulWidget {
 
 class _MainNavigationPageState extends State<MainNavigationPage> {
   static bool isDrawerOpen = false;
+  static bool settingDrawerOpen = false;
   int selectedPage = 1;
   int settingSelectedPage = 0;
   int _focusedDrawerItem = 0;
@@ -59,6 +60,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
       settingSelectedPage = index;
       isDrawerOpen = false;
     });
+    contentFocusNode.requestFocus();
   }
 
   bool openText = false;
@@ -245,7 +247,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                                       ),
                                     ],
                                   )
-                                : selectedPage == 6
+                                : selectedPage == 6 && settingDrawerOpen == true
                                     ? Row(
                                         children: [
                                           41.horizontalSpace,
@@ -282,6 +284,8 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                                                             setState(() {
                                                               _focusedSettingItem =
                                                                   index;
+                                                              _settingSelectPage(
+                                                                  _focusedSettingItem);
                                                             });
                                                           },
                                                         );
@@ -512,12 +516,18 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
   void _handleMove(Direction direction) {
     if (direction == Direction.left) {
-      if (!isDrawerOpen) {
+      if (settingDrawerOpen == false && selectedPage == 6) {
+        setState(() {
+          settingDrawerOpen = true;
+          _focusedSettingItem = settingSelectedPage;
+        });
+      } else if (!isDrawerOpen) {
         setState(() {
           isDrawerOpen = true;
           _focusedDrawerItem = selectedPage;
         });
       }
+
       if (filterFocusNode.hasFocus || SettingFocusNode.hasFocus) {
         setState(() {
           drawerFocusNode.requestFocus();
@@ -530,7 +540,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           _focusedCategoryItem = _focusedCategoryItem - 1;
         } else if (SettingFocusNode.hasFocus && _focusedSettingItem > 0) {
           _focusedSettingItem = _focusedSettingItem - 1;
-          _settingSelectPage(_focusedSettingItem);
         } else if (isDrawerOpen) {
           _focusedDrawerItem = (_focusedDrawerItem > 0)
               ? _focusedDrawerItem - 1
@@ -543,7 +552,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
           _focusedCategoryItem = _focusedCategoryItem + 1;
         } else if (SettingFocusNode.hasFocus && _focusedSettingItem < 3) {
           _focusedSettingItem = _focusedSettingItem + 1;
-          _settingSelectPage(_focusedSettingItem);
         } else if (isDrawerOpen) {
           _focusedDrawerItem = (_focusedDrawerItem < 6)
               ? _focusedDrawerItem + 1
@@ -575,11 +583,18 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         isDrawerOpen = false;
         filterFocusNode.requestFocus();
       });
-    } else if (_focusedDrawerItem == 6) {
+    } else if (isDrawerOpen = true && _focusedDrawerItem == 6) {
       setState(() {
         selectedPage = 6;
         isDrawerOpen = false;
+        settingDrawerOpen = true;
         SettingFocusNode.requestFocus();
+      });
+    }
+    if (SettingFocusNode.hasFocus) {
+      setState(() {
+        _settingSelectPage(_focusedSettingItem);
+        settingDrawerOpen = false;
       });
     }
   }

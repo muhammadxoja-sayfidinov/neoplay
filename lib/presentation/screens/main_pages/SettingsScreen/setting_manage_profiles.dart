@@ -103,7 +103,6 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
                       );
                     },
                     profile1FocusNode,
-                    'assets/images/edit_logo.svg',
                   ),
                   SizedBox(width: 40.w),
                   _buildProfileCard(
@@ -120,7 +119,6 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
                       );
                     },
                     profile2FocusNode,
-                    'assets/images/edit_logo.svg',
                   ),
                   SizedBox(width: 40.w),
                   _buildProfileCard(
@@ -137,7 +135,6 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
                       );
                     },
                     profile3FocusNode,
-                    'assets/images/addprofile.svg',
                   ),
                 ],
               ),
@@ -162,14 +159,8 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
     );
   }
 
-  Widget _buildProfileCard(
-      int index,
-      String title,
-      String subtitle,
-      String imagePath,
-      VoidCallback onTap,
-      FocusNode focusNode,
-      String logoPath) {
+  Widget _buildProfileCard(int index, String title, String subtitle,
+      String imagePath, VoidCallback onTap, FocusNode focusNode) {
     bool isSelected = _selectedIndex == index;
 
     return GestureDetector(
@@ -181,8 +172,6 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
       child: Focus(
         focusNode: focusNode,
         child: Container(
-          width: 330.w,
-          height: 390.h,
           padding: EdgeInsets.symmetric(horizontal: 40.sp, vertical: 20.sp),
           decoration: BoxDecoration(
             color: grey,
@@ -190,27 +179,34 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
               color: focusNode.hasFocus ? Colors.red : Colors.transparent,
               width: 2.w,
             ),
-            borderRadius: BorderRadius.all(Radius.circular(32.r)),
+            borderRadius: BorderRadius.circular(12.w),
           ),
           child: Stack(
             children: [
               Column(
                 children: [
-                  Container(
-                    width: 250.w,
-                    height: 250.h,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: imagePath.isNotEmpty
-                          ? DecorationImage(
-                              image: AssetImage(imagePath),
-                              fit: BoxFit.cover,
-                            )
-                          : null,
-                      color: gilosNeutral600, // Rasm bo'lmasa rangi
-                    ),
-                  ),
-                  SizedBox(height: 24.h), // Bo'shliq (gap)
+                  imagePath.isNotEmpty
+                      ? CircleAvatar(
+                          radius: 130.r,
+                          backgroundImage: AssetImage(imagePath),
+                        )
+                      : Container(
+                          width: 260.w,
+                          height: 260.w,
+                          decoration: BoxDecoration(
+                              color: gilosNeutral600,
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage(imagePath),
+                                fit: BoxFit.cover,
+                              )),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              'assets/images/addprofile.svg',
+                            ),
+                          ),
+                        ),
+                  SizedBox(height: 20.h),
                   Text(
                     title,
                     style: CustomTextStyle.style600.copyWith(
@@ -218,28 +214,34 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
                       color: Colors.white,
                     ),
                   ),
-                  subtitle.isNotEmpty
-                      ? Text(
-                          subtitle,
-                          style: CustomTextStyle.style400.copyWith(
-                            fontSize: 28.sp,
-                            color: Colors.grey,
-                          ),
-                        )
-                      : const SizedBox(),
+                  Text(
+                    subtitle,
+                    style: CustomTextStyle.style400.copyWith(
+                      fontSize: 28.sp,
+                      color: Colors.grey,
+                    ),
+                  ),
                 ],
               ),
-              Positioned(
-                top: 80.h,
-                right: 60.w,
-                child: TextButton(
-                  child: SvgPicture.asset(
-                    width: 64.w,
-                    logoPath,
-                  ),
-                  onPressed: onTap,
-                ),
-              )
+              imagePath.isNotEmpty
+                  ? Positioned(
+                      top: 70.h,
+                      right: 80.w,
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(
+                            width: 64.w,
+                            'assets/images/edit_logo.svg',
+                          ),
+                          6.verticalSpace,
+                          Text(
+                            "O’zgartirish",
+                            style: CustomTextStyle.style500
+                                .copyWith(fontSize: 18.sp, color: Colors.white),
+                          )
+                        ],
+                      ))
+                  : const SizedBox(),
             ],
           ),
         ),

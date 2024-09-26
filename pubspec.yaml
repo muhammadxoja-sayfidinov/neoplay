@@ -43,6 +43,7 @@ flutter:
     - assets/images/
     - assets/film_images/
     - assets/rating/
+    - assets/profile_images/
 
   # fonts:
   #   - family: Schyler

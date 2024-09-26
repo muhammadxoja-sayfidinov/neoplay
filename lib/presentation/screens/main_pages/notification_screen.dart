@@ -76,13 +76,9 @@ class _NotificationScreenState extends State<NotificationScreen> {
                             gridDelegate:
                                 const SliverGridDelegateWithFixedCrossAxisCount(
                               crossAxisCount: 2,
-                              // Specify the number of columns in the grid
                               mainAxisSpacing: 16,
-                              // Specify the spacing between each item along the main axis
                               crossAxisSpacing: 16,
-                              // Specify the spacing between each item along the cross axis
-                              childAspectRatio:
-                                  1.7, // Specify the aspect ratio of each item
+                              childAspectRatio: 1.7,
                             ),
                             itemCount: notification.length,
                             itemBuilder: (context, index) {

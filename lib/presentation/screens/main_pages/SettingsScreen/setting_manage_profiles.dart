@@ -9,6 +9,7 @@ import '../../../widgets/custom_button.dart';
 import '../../Login and registration/children_profile_editing.dart';
 import '../../Login and registration/profile_editing.dart';
 import '../../Login and registration/successfully_registered.dart';
+import 'add_new_profile.dart';
 
 class SettingManageProfiles extends StatefulWidget {
   const SettingManageProfiles({super.key});
@@ -63,12 +64,13 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
           }
         },
         child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 300.w),
           width: size.width,
           height: size.height,
           color: Colors.black,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 "Profillarni boshqarish",
@@ -79,16 +81,15 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
               ),
               SizedBox(height: 20.h),
               Text(
-                "5 tagacha kattalar va bolalar uchun profilni yarating, o'zgartirishlar kiriting va keraksizlarini o'chirib tashlashingiz ham mumkin",
+                "5 tagacha kattalar va bolalar uchun profilni yarating,\no'zgartirishlar kiriting va keraksizlarini o'chirib\ntashlashingiz ham mumkin",
                 style: CustomTextStyle.style400.copyWith(
                   fontSize: 28.sp,
                   color: Colors.grey,
                 ),
-                textAlign: TextAlign.center,
               ),
               SizedBox(height: 50.h),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   _buildProfileCard(
                     0,
@@ -130,8 +131,7 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) =>
-                                const ChildrenProfileEditing()),
+                            builder: (context) => const AddNewProfile()),
                       );
                     },
                     profile3FocusNode,
@@ -141,7 +141,7 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
               SizedBox(height: 50.h),
               CustomButton(
                 color: lightGrey,
-                width: 708.sp,
+                width: double.infinity,
                 name: "Saqlash",
                 onPressed: () {
                   Navigator.push(
@@ -161,14 +161,8 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
 
   Widget _buildProfileCard(int index, String title, String subtitle,
       String imagePath, VoidCallback onTap, FocusNode focusNode) {
-    bool isSelected = _selectedIndex == index;
-
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-        });
-      },
+      onTap: onTap,
       child: Focus(
         focusNode: focusNode,
         child: Container(
@@ -179,7 +173,7 @@ class _SettingManageProfilesState extends State<SettingManageProfiles> {
               color: focusNode.hasFocus ? Colors.red : Colors.transparent,
               width: 2.w,
             ),
-            borderRadius: BorderRadius.circular(12.w),
+            borderRadius: BorderRadius.circular(32.r),
           ),
           child: Stack(
             children: [

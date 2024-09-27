@@ -16,3 +16,6 @@ const Color gilosNeutralWhite = Color.fromRGBO(255, 255, 255, 1);
 const Color GilosNeutral700 = Color.fromRGBO(25, 27, 31, 1);
 const Color GilosNeutral800 = Color.fromRGBO(20, 22, 25, 1);
 const Color GilosNeutral900 = Color.fromRGBO(13, 14, 16, 1);
+const Color gilosNeutral600 = Color.fromRGBO(37, 39, 42, 1);
+const Color errrorcolorV2 = Color.fromRGBO(235, 94, 15, 1);
+const Color gilosNeutral400 = Color.fromRGBO(58, 60, 64, 1);

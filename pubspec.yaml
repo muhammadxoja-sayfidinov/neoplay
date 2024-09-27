@@ -22,8 +22,6 @@ dependencies:
   flutter_screenutil: ^5.9.3
   animated_text_kit: ^4.2.2
   smooth_page_indicator: ^1.2.0
-  video_player: ^2.9.1
-  shared_preferences: ^2.3.2
 
 
 dev_dependencies:
@@ -42,7 +40,6 @@ flutter:
   assets:
     - assets/images/
     - assets/film_images/
-    - assets/rating/
 
   # fonts:
   #   - family: Schyler

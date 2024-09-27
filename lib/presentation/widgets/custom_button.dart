@@ -6,7 +6,7 @@ class CustomButton extends StatefulWidget {
   final String name;
   final double width;
   final Color color;
-  final FocusNode focusNode;
+  final FocusNode? focusNode;
 
   const CustomButton({
     Key? key,
@@ -14,7 +14,7 @@ class CustomButton extends StatefulWidget {
     required this.width,
     required this.name,
     required this.onPressed,
-    required this.focusNode,
+    this.focusNode,
   }) : super(key: key);
 
   @override
@@ -29,19 +29,19 @@ class _CustomButtonState extends State<CustomButton> {
     super.initState();
     _currentColor = widget.color;
     // Add a listener to the focusNode to rebuild the widget when the focus changes.
-    widget.focusNode.addListener(_onFocusChange);
+    widget.focusNode?.addListener(_onFocusChange);
   }
 
   @override
   void dispose() {
     // Remove the listener when the widget is disposed of.
-    widget.focusNode.removeListener(_onFocusChange);
+    widget.focusNode?.removeListener(_onFocusChange);
     super.dispose();
   }
 
   void _onFocusChange() {
     setState(() {
-      _currentColor = widget.focusNode.hasFocus ? Colors.red : widget.color;
+      _currentColor = widget.focusNode!.hasFocus ? Colors.red : widget.color;
     });
   }
 

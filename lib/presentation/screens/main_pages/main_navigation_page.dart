@@ -1,15 +1,17 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:neoplay/core/constants/style.dart';
+import 'package:neoplay/presentation/screens/Login%20and%20registration/enable_protection.dart';
+import 'package:neoplay/presentation/screens/main_pages/SettingsScreen/buys_subscription.dart';
+import 'package:neoplay/presentation/screens/main_pages/SettingsScreen/setting_devices.dart';
+import 'package:neoplay/presentation/screens/main_pages/SettingsScreen/setting_manage_profiles.dart';
 import 'package:neoplay/presentation/screens/main_pages/main_screen.dart';
-import 'package:neoplay/presentation/screens/main_pages/PlayerScreen/profile_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/saved_screen.dart';
 import 'package:neoplay/presentation/screens/main_pages/search_screen.dart';
-import 'package:neoplay/presentation/screens/main_pages/setting_screen.dart';
 
+import 'PlayerScreen/profile_screen.dart';
 import 'catalog_sceen.dart';
 import 'notification_screen.dart';
 
@@ -22,13 +24,17 @@ class MainNavigationPage extends StatefulWidget {
 
 class _MainNavigationPageState extends State<MainNavigationPage> {
   static bool isDrawerOpen = false;
+  static bool settingDrawerOpen = false;
   int selectedPage = 1;
+  int settingSelectedPage = 0;
   int _focusedDrawerItem = 0;
   int _focusedCategoryItem = 0;
+  int _focusedSettingItem = 0;
 
   static final FocusNode drawerFocusNode = FocusNode();
   final FocusNode contentFocusNode = FocusNode();
   final FocusNode filterFocusNode = FocusNode();
+  final FocusNode SettingFocusNode = FocusNode();
 
   void toggleDrawer() {
     setState(() {
@@ -49,17 +55,43 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
     contentFocusNode.requestFocus();
   }
 
+  void _settingSelectPage(int index) {
+    setState(() {
+      settingSelectedPage = index;
+      isDrawerOpen = false;
+    });
+    contentFocusNode.requestFocus();
+  }
+
   bool openText = false;
 
   @override
   Widget build(BuildContext context) {
     Widget body = const ProfileScreen();
+
+    if (selectedPage == 6) {
+      switch (settingSelectedPage) {
+        case 0:
+          body = SettingManageProfiles();
+          break;
+        case 1:
+          body = EnableProtection();
+          break;
+        case 2:
+          body = const BuysSubscription();
+          break;
+        case 3:
+          body = const SettingDevices();
+          break;
+      }
+    }
+
     switch (selectedPage) {
       case 0:
         body = SearchScreen();
         break;
       case 1:
-        body = const MainScreen();
+        body = MainScreen();
         break;
       case 2:
         body = const CatalogScreen();
@@ -72,9 +104,6 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
         break;
       case 5:
         body = const ProfileScreen();
-        break;
-      case 6:
-        body = const SettingScreen();
         break;
     }
 
@@ -171,8 +200,7 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                               ),
                             ),
                             // Category section for "Catalog"
-                            _focusedDrawerItem == 2 &&
-                                    !contentFocusNode.hasFocus
+                            selectedPage == 2 && !contentFocusNode.hasFocus
                                 ? Row(
                                     children: [
                                       41.horizontalSpace,
@@ -219,7 +247,58 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                                       ),
                                     ],
                                   )
-                                : Container(),
+                                : selectedPage == 6 && settingDrawerOpen == true
+                                    ? Row(
+                                        children: [
+                                          41.horizontalSpace,
+                                          SizedBox(
+                                            width: 300.w,
+                                            child: Focus(
+                                              focusNode: SettingFocusNode,
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    "Sozlamalar",
+                                                    style: CustomTextStyle
+                                                        .style500
+                                                        .copyWith(
+                                                            fontSize: 28.sp,
+                                                            color:
+                                                                Colors.white),
+                                                  ),
+                                                  32.verticalSpace,
+                                                  Expanded(
+                                                    child: ListView.builder(
+                                                      itemCount: 4,
+                                                      itemBuilder:
+                                                          (context, index) {
+                                                        return _buildSittingItem(
+                                                          text: _getSettingText(
+                                                              index),
+                                                          isFocused:
+                                                              _focusedSettingItem ==
+                                                                  index,
+                                                          onTap: () {
+                                                            setState(() {
+                                                              _focusedSettingItem =
+                                                                  index;
+                                                              _settingSelectPage(
+                                                                  _focusedSettingItem);
+                                                            });
+                                                          },
+                                                        );
+                                                      },
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
                           ],
                         ),
                       ),
@@ -292,6 +371,23 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
       default:
         return 'Barchasi';
+    }
+  }
+
+  String _getSettingText(int index) {
+    // Add category names here
+    switch (index) {
+      case 0:
+        return 'Profillarni boshqarish';
+      case 1:
+        return 'FilmPin kod o’rnatishlar';
+      case 2:
+        return 'Obuna sotib olish';
+      case 3:
+        return 'Qurilmalar';
+
+      default:
+        return 'Profillarni boshqarish';
     }
   }
 
@@ -383,8 +479,36 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
                     "assets/images/check.svg",
                     width: 24.w,
                   )
-                : const SizedBox(),
+                : SizedBox(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSittingItem({
+    required String text,
+    required bool isFocused,
+    required Function() onTap,
+  }) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 32.w),
+        alignment: Alignment.centerLeft,
+        height: 60.h,
+        decoration: BoxDecoration(
+          color: isFocused && SettingFocusNode.hasFocus
+              ? Colors.red.shade600
+              : Colors.transparent,
+          borderRadius: BorderRadius.circular(50.r),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 18.sp,
+          ),
         ),
       ),
     );
@@ -392,57 +516,86 @@ class _MainNavigationPageState extends State<MainNavigationPage> {
 
   void _handleMove(Direction direction) {
     if (direction == Direction.left) {
-      if (!isDrawerOpen) {
+      if (settingDrawerOpen == false && selectedPage == 6) {
+        setState(() {
+          settingDrawerOpen = true;
+          _focusedSettingItem = settingSelectedPage;
+        });
+      } else if (!isDrawerOpen) {
         setState(() {
           isDrawerOpen = true;
           _focusedDrawerItem = selectedPage;
         });
       }
-      if (filterFocusNode.hasFocus) {
+
+      if (filterFocusNode.hasFocus || SettingFocusNode.hasFocus) {
         setState(() {
           drawerFocusNode.requestFocus();
         });
       }
       drawerFocusNode.requestFocus();
-    } else if (isDrawerOpen) {
-      if (direction == Direction.up) {
-        setState(() {
-          if (filterFocusNode.hasFocus && _focusedCategoryItem > 0) {
-            _focusedCategoryItem = _focusedCategoryItem - 1;
-          } else {
-            _focusedDrawerItem = (_focusedDrawerItem > 0)
-                ? _focusedDrawerItem - 1
-                : _focusedDrawerItem;
-          }
-        });
-      } else if (direction == Direction.down) {
-        setState(() {
-          if (filterFocusNode.hasFocus && _focusedCategoryItem < 4) {
-            _focusedCategoryItem = _focusedCategoryItem + 1;
-          } else {
-            _focusedDrawerItem = (_focusedDrawerItem < 6)
-                ? _focusedDrawerItem + 1
-                : _focusedDrawerItem;
-          }
-        });
-      } else if (direction == Direction.right) {
-        if (_focusedDrawerItem == 2) {
-          setState(() {
-            filterFocusNode.requestFocus();
-          });
-        } else {
-          toggleDrawer();
-          contentFocusNode.requestFocus();
+    } else if (direction == Direction.up) {
+      setState(() {
+        if (filterFocusNode.hasFocus && _focusedCategoryItem > 0) {
+          _focusedCategoryItem = _focusedCategoryItem - 1;
+        } else if (SettingFocusNode.hasFocus && _focusedSettingItem > 0) {
+          _focusedSettingItem = _focusedSettingItem - 1;
+        } else if (isDrawerOpen) {
+          _focusedDrawerItem = (_focusedDrawerItem > 0)
+              ? _focusedDrawerItem - 1
+              : _focusedDrawerItem;
         }
+      });
+    } else if (direction == Direction.down) {
+      setState(() {
+        if (filterFocusNode.hasFocus && _focusedCategoryItem < 4) {
+          _focusedCategoryItem = _focusedCategoryItem + 1;
+        } else if (SettingFocusNode.hasFocus && _focusedSettingItem < 3) {
+          _focusedSettingItem = _focusedSettingItem + 1;
+        } else if (isDrawerOpen) {
+          _focusedDrawerItem = (_focusedDrawerItem < 6)
+              ? _focusedDrawerItem + 1
+              : _focusedDrawerItem;
+        }
+      });
+    } else if (direction == Direction.right) {
+      if (selectedPage == 2) {
+        setState(() {
+          filterFocusNode.requestFocus();
+        });
+      } else if (selectedPage == 6) {
+        setState(() {
+          SettingFocusNode.requestFocus();
+        });
+      } else if (isDrawerOpen) {
+        toggleDrawer();
+        contentFocusNode.requestFocus();
       }
     }
   }
 
   void _handleActivate() {
-    if (isDrawerOpen) {
+    if (isDrawerOpen && _focusedDrawerItem != 2 && _focusedDrawerItem != 6) {
       _selectPage(_focusedDrawerItem);
-    } else {
-      // Handle activation of the main content, if necessary
+    } else if (_focusedDrawerItem == 2) {
+      setState(() {
+        selectedPage = 2;
+        isDrawerOpen = false;
+        filterFocusNode.requestFocus();
+      });
+    } else if (isDrawerOpen = true && _focusedDrawerItem == 6) {
+      setState(() {
+        selectedPage = 6;
+        isDrawerOpen = false;
+        settingDrawerOpen = true;
+        SettingFocusNode.requestFocus();
+      });
+    }
+    if (SettingFocusNode.hasFocus) {
+      setState(() {
+        _settingSelectPage(_focusedSettingItem);
+        settingDrawerOpen = false;
+      });
     }
   }
 }

@@ -127,41 +127,38 @@ class _PartsState extends State<Parts> {
           30.verticalSpace,
           GridView.builder(
             shrinkWrap: true,
-            // Make GridView shrink to fit its content
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 5,
-              // Specify the number of columns in the grid
               mainAxisSpacing: 16,
-              // Specify the spacing between each item along the main axis
               crossAxisSpacing: 16,
-              // Specify the spacing between each item along the cross axis
-              childAspectRatio: 1.7, // Specify the aspect ratio of each item
+              childAspectRatio: 1.7,
             ),
             itemCount: _partList.length,
             itemBuilder: (context, index) {
               return Container(
-                alignment: Alignment(0, 1),
-                width: 334.w,
-                height: 189.sp,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20.r),
-                  image: DecorationImage(
-                    image: AssetImage(_partList[index]),
-                    fit: BoxFit.cover,
+                  alignment: Alignment(0, 1),
+                  width: 334.w,
+                  height: 189.sp,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.r),
+                    image: DecorationImage(
+                      image: AssetImage(_partList[index]),
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                ),
-                child: VideoProgressIndicator(
-                  _controller!,
-                  allowScrubbing: true,
-                  colors: const VideoProgressColors(
-                    playedColor: Colors.red,
-                    bufferedColor: Colors.white54,
-                    backgroundColor: Colors.grey,
-                  ),
-                ),
-              );
+                  child: _controller != null && _controller!.value.isInitialized
+                      ? VideoProgressIndicator(
+                          _controller!,
+                          allowScrubbing: true,
+                          colors: const VideoProgressColors(
+                            playedColor: Colors.red,
+                            bufferedColor: Colors.white54,
+                            backgroundColor: Colors.grey,
+                          ),
+                        )
+                      : null);
             },
-          ),
+          )
         ],
       ),
     );

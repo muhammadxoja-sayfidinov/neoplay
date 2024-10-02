@@ -38,7 +38,7 @@ class _SimilarMoviesState extends State<SimilarMovies> {
     return Container(
       padding: EdgeInsets.all(48.sp),
       width: 1700.sp,
-      height: 772.w,
+      height: 1000.w,
       decoration: BoxDecoration(
         color: GilosNeutral800,
         borderRadius: BorderRadius.circular(60.r),
@@ -52,7 +52,7 @@ class _SimilarMoviesState extends State<SimilarMovies> {
           ),
           24.verticalSpace,
           SizedBox(
-            height: 630.h,
+            height: 570.h,
             child: SingleChildScrollView(
               physics: const NeverScrollableScrollPhysics(),
               controller: _newFilmsScrollController,
